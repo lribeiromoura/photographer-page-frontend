@@ -3,11 +3,11 @@ import React from "react";
 
 import { Login } from "./components/Login";
 
-import { useLoginContext } from "./context/login";
+import { useLogin } from "@/hooks/useLogin";
 
 export default function Admin() {
   const { handleLogin, password, setPassword, setUsername, username } =
-    useLoginContext();
+    useLogin();
 
   return (
     <Login
