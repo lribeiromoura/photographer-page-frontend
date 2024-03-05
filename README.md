@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Photographer Admin Frontend
 
-## Getting Started
+This repository contains the frontend application built with Next.js for administering photos and videos for a photographer.
 
-First, run the development server:
+## Environment Configuration
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Before running the application, you need to set up the environment. Ensure you have a `.env.local` file at the root of the project with the following variable:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`NEXT_PUBLIC_BASE_URL= # base URL for the API`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Make sure to provide the correct base URL for the API to connect with the backend server.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Installation
 
-## Learn More
+1.  Clone this repository to your local machine:
 
-To learn more about Next.js, take a look at the following resources:
+`git clone https://github.com/lribeiromoura/photographer-page-frontend`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2.  Navigate to the project directory:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+`cd photographer-page-frontend`
 
-## Deploy on Vercel
+3.  Install the required dependencies:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+`npm install`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Running the Application
+
+After configuring the environment and installing dependencies, you can run the Next.js application. Ensure that the backend server is running and accessible.
+
+Run the following command to start the development server:
+
+`npm run dev`
+
+The application will be available at `http://localhost:3000` by default.
+
+## Features
+
+The frontend application offers the following features:
+
+- Admin dashboard for managing photos and videos.
+- Integration with the backend API for CRUD operations.
+- Responsive design for various screen sizes.
+
+## Contribution
+
+Contributions to this project are welcome. Feel free to submit pull requests with new features, improvements, or bug fixes.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for more details.
