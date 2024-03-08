@@ -1,39 +1,45 @@
 "use client";
 import { useEffect, useState } from "react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { login } from "@/app/services/admin";
 
 export const useLogin = () => {
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [token, setToken] = useState<string>("");
+  const [isLoginLoading, setIsLoginLoading] = useState(false);
 
   const handleLogin = async () => {
-    debugger;
+    setIsLoginLoading(true);
     const response = await login(username, password);
     if (response.status === 401) {
       console.log("Invalid credentials");
       return;
     }
-    localStorage.setItem("access_token", response.access_token);
-    redirect("/admin/media");
+    localStorage.setItem("access_token", response);
+    setIsLoginLoading(false);
+    router.push("/admin/media");
   };
 
   const handleLogout = () => {
     localStorage.removeItem("access_token");
-    redirect("/admin");
+    router.push("/admin");
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("access_token");
-
-    if (token) {
-      redirect("/admin/media");
+    const tokenLocalStorage = localStorage.getItem("access_token");
+    if (tokenLocalStorage && window.location.pathname === "/admin") {
+      setToken(tokenLocalStorage);
+      router.push("/admin/media");
     }
-  }, []);
+  }, [token]);
 
   return {
     username,
     password,
+    token,
+    isLoginLoading,
     setUsername,
     setPassword,
     handleLogout,
