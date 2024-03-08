@@ -177,6 +177,9 @@ export const MediaTable = ({
                     Next
                   </button>
                 </div>
+                <div className="text-xs xs:text-sm text-gray-900 my-2">
+                  Total {count} media found
+                </div>
               </div>
             </>
           )}

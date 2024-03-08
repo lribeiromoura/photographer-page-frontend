@@ -2,6 +2,7 @@
 interface LoginProps {
   username: string;
   password: string;
+  isLoading: boolean;
   setUsername: (value: string) => void;
   setPassword: (value: string) => void;
   handleLogin: () => void;
@@ -10,6 +11,7 @@ interface LoginProps {
 export const Login = ({
   username,
   password,
+  isLoading,
   setUsername,
   setPassword,
   handleLogin,
@@ -44,8 +46,11 @@ export const Login = ({
               />
             </div>
             <button
-              className="bg-black font-bold text-white focus:outline-none rounded p-3"
+              className={`${
+                isLoading ? "bg-slate-500" : "bg-black"
+              } font-bold text-white focus:outline-none rounded p-3`}
               onClick={handleLogin}
+              disabled={isLoading}
             >
               Submit
             </button>
