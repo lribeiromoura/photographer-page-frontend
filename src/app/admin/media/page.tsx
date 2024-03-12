@@ -18,6 +18,8 @@ import {
 import { AddMedia } from "./components/AddMedia";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useLogin } from "@/hooks/useLogin";
+import { redirect } from "next/navigation";
 export default function MediaPage() {
   const [loading, setLoading] = useState(true);
 
@@ -36,6 +38,8 @@ export default function MediaPage() {
 
   const [selectedPhoto, setSelectedPhoto] = useState<Media>({} as Media);
 
+  const { token } = useLogin();
+
   const handleDelete = async () => {
     if (selectedPhoto && selectedPhoto._id) {
       await deleteMedia(selectedPhoto._id);
@@ -50,7 +54,10 @@ export default function MediaPage() {
       const type = selectedPhoto._id ? "edit" : "add";
       let response;
       if (type === "add") {
-        response = await createMedia(selectedPhoto);
+        response = await createMedia({
+          ...selectedPhoto,
+          isPublished: selectedPhoto.isPublished ? true : false,
+        });
       } else {
         response = await editMedia(selectedPhoto);
       }
@@ -81,8 +88,10 @@ export default function MediaPage() {
         tags,
         type
       );
-      setCount(response.total);
-      setPhotos(response.data);
+      if (response) {
+        setCount(response.total);
+        setPhotos(response.data);
+      }
     } catch (error) {
       console.error("Error fetching photos", error);
     } finally {
@@ -91,6 +100,10 @@ export default function MediaPage() {
   };
 
   useEffect(() => {
+    if (localStorage.getItem("access_token") === null) {
+      redirect("/admin");
+      return;
+    }
     fetchPhotos();
   }, [page, perPage, active, tags, search, type]);
 
