@@ -10,6 +10,10 @@ export interface Media {
   __v?: number;
   createdAt?: string;
   updatedAt?: string;
+  width?: number;
+  height?: number;
+  src?: string;
+  caption?: string;
 }
 
 export type MediaCreate = Exclude<
@@ -29,4 +33,9 @@ export enum MediaTags {
 export enum MediaType {
   VIDEO = "Video",
   PHOTO = "Photo",
+}
+
+export interface MediaResponse {
+  data: Media[];
+  total: number;
 }
