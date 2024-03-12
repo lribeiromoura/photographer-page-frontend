@@ -18,9 +18,10 @@ export const useListPhotos = () => {
       ...image,
       src: image.url,
       caption: image.name,
-      width: getImgSize(image.url).width,
-      height: getImgSize(image.url).height,
+      width: getImgSize(image.url).width || 1920,
+      height: getImgSize(image.url).height || 1280,
     }));
+    console.log(parsedData);
     if (parsedData && parsedData.length > 0) {
       setImages(parsedData);
     }
