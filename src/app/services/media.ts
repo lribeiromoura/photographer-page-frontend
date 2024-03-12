@@ -1,4 +1,4 @@
-import { Media } from "@/@types/media";
+import { Media, MediaResponse } from "@/@types/media";
 
 export const getMedia = async (
   limit: number,
@@ -19,7 +19,7 @@ export const getMedia = async (
         },
       }
     );
-    const data = await response.json();
+    const data: MediaResponse = await response.json();
     return data;
   } catch (error) {
     console.error("Error fetching photos", error);

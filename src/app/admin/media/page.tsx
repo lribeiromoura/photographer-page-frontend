@@ -88,8 +88,10 @@ export default function MediaPage() {
         tags,
         type
       );
-      setCount(response.total);
-      setPhotos(response.data);
+      if (response) {
+        setCount(response.total);
+        setPhotos(response.data);
+      }
     } catch (error) {
       console.error("Error fetching photos", error);
     } finally {
