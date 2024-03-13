@@ -14,10 +14,10 @@ import {
   deleteMedia,
   editMedia,
   getMedia,
-} from "@/app/services/media";
+} from "@/services/media";
 import { AddMedia } from "./components/AddMedia";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 import { useLogin } from "@/hooks/useLogin";
 import { redirect } from "next/navigation";
 export default function MediaPage() {
