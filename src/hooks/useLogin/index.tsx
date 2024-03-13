@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { login } from "@/app/services/admin";
+import { login } from "@/services/admin";
 
 export const useLogin = () => {
   const router = useRouter();

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { MenuComponent } from "@/components/Menu";
-
+import "react-toastify/dist/ReactToastify.css";
 const inter = Montserrat({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
