@@ -15,34 +15,36 @@ export const GalleryPhoto = ({
   setIndex,
 }: GalleryPhotoProps) => {
   return (
-    <Gallery key={index} options={{}}>
-      {images.map((image: any, i: number) => {
-        return (
-          <Item
-            key={i}
-            original={image.src}
-            thumbnail={image.src}
-            width={image.width}
-            height={image.height}
-          >
-            {({ ref, open }) => (
-              <Image
-                className="border-2"
-                alt=""
-                ref={ref}
-                width={image.width}
-                height={image.height}
-                onClick={(e) => {
-                  setIndex(i);
-                  open(e);
-                }}
-                loader={() => image.src}
-                src={image.src}
-              />
-            )}
-          </Item>
-        );
-      })}
-    </Gallery>
+    <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 items-center">
+      <Gallery key={index} options={{}}>
+        {images.map((image: any, i: number) => {
+          return (
+            <Item
+              key={i}
+              original={image.src}
+              thumbnail={image.src}
+              width={image.width}
+              height={image.height}
+            >
+              {({ ref, open }) => (
+                <Image
+                  className="border-2"
+                  alt=""
+                  ref={ref}
+                  width={image.width}
+                  height={image.height}
+                  onClick={(e) => {
+                    setIndex(i);
+                    open(e);
+                  }}
+                  loader={() => image.src}
+                  src={image.src}
+                />
+              )}
+            </Item>
+          );
+        })}
+      </Gallery>
+    </div>
   );
 };

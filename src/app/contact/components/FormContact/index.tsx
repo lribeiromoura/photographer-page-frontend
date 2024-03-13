@@ -1,16 +1,11 @@
 "use client";
-import { sendEmail } from "@/services/contact";
-import { useState } from "react";
 
 interface FormContactProps {
   loading: boolean;
   handleSendEmail: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
-export const FormContact = ({
-  loading,
-  handleSendEmail,
-}: FormContactProps) => {
+export const FormContact = ({ loading, handleSendEmail }: FormContactProps) => {
   return (
     <form
       onSubmit={handleSendEmail}
@@ -48,7 +43,7 @@ export const FormContact = ({
         disabled={loading}
         className={`${
           loading ? "cursor-not-allowed bg-slate-600" : "cursor-pointer"
-        }w-full bg-black text-white font-bold p-2 rounded-md hover:bg-gray-800 transition-all duration-300 ease-in-out`}
+        } w-full bg-black text-white font-bold p-2 rounded-md hover:bg-gray-800 transition-all duration-300 ease-in-out`}
       >
         Send
       </button>
