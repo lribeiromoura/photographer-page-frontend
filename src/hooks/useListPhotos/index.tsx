@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getMedia } from "@/app/services/media";
+import { getMedia } from "@/services/media";
 import { Media } from "@/@types/media";
 import { getImgSize } from "@/util/getImageSize";
 
