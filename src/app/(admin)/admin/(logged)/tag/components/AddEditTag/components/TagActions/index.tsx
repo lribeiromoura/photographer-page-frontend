@@ -12,14 +12,21 @@ import { DialogItem } from "@/app/(admin)/admin/(logged)/components/DialogItem";
 import { AddEditTag } from "../..";
 import { DeleteDialog } from "@/app/(admin)/admin/(logged)/components/DeleteDialog";
 import { Tag } from "@/@types/tag";
+import { MediaType } from "@/@types/mediatype";
 
 interface TagActionsProps {
   tag: Tag;
+  mediaTypes: MediaType[];
   onEdit: (tag: Tag) => void;
   onDelete: (tag: Tag) => void;
 }
 
-export const TagActions = ({ tag, onEdit, onDelete }: TagActionsProps) => {
+export const TagActions = ({
+  tag,
+  mediaTypes,
+  onEdit,
+  onDelete,
+}: TagActionsProps) => {
   const handleEditTag = (tag: Tag) => {
     onEdit(tag);
   };
@@ -45,6 +52,7 @@ export const TagActions = ({ tag, onEdit, onDelete }: TagActionsProps) => {
             <AddEditTag
               onConfirm={(tagEdited) => handleEditTag(tagEdited)}
               tag={tag}
+              mediaTypes={mediaTypes}
             />
           </DialogItem>
           <DialogItem

@@ -52,6 +52,7 @@ export default function TagPage() {
             onDelete={() => handleDeleteTag(tag)}
             onEdit={(editTag) => handleEditTag(editTag)}
             tag={tag}
+            mediaTypes={mediaTypes}
           />
         );
       },
