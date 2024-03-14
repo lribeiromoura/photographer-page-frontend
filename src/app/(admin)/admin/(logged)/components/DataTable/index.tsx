@@ -15,7 +15,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Copy } from "lucide-react";
 
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -35,11 +34,6 @@ export default function DataTable<TData, TValue>({
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
-
-  const handleconsole = (e: any) => {
-    debugger;
-    return e.toString();
-  };
 
   return (
     <div className="rounded-md border">
@@ -69,33 +63,19 @@ export default function DataTable<TData, TValue>({
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
-                  {row.getVisibleCells().map((cell) =>
-                    cell.column.id === "url" ? (
-                      <TableCell
-                        key={cell.id}
-                        className="pointer-events-auto cursor-pointer"
-                        onClick={() => {
-                          navigator.clipboard.writeText(
-                            cell.row.renderValue(cell.column.id)
-                          );
-                        }}
-                      >
-                        <Copy />
-                      </TableCell>
-                    ) : (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    )
-                  )}
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
                 </TableRow>
               ))
             : Array.from({ length: 10 }).map((_, index) => (
                 <TableRow key={index}>
-                  {Array.from({ length: 7 }).map((_, index) => (
+                  {Array.from({ length: 3 }).map((_, index) => (
                     <TableCell key={index}>
                       <Skeleton className="w-[100px] h-[20px] rounded-full bg-white" />
                     </TableCell>

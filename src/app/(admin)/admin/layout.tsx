@@ -15,7 +15,7 @@ export default function AdminLayout({
 }>) {
   return (
     <div
-      className={`${inter.className} bg-black h-full py-10 px-4 mx-auto sm:px-8`}
+      className={`${inter.className} bg-black text-white h-full py-10 px-4 mx-auto sm:px-8`}
     >
       {children}
     </div>

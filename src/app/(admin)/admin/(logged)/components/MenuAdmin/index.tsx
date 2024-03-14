@@ -15,19 +15,40 @@ import { cn } from "@/lib/utils";
 export function MenuAdmin() {
   const [selected, setSelected] = useState("");
 
+  const menu = [
+    { name: "MEDIA", path: "/admin/media", enum: "media" },
+    { name: "TAG", path: "/admin/tag", enum: "tag" },
+    { name: "MEDIA TYPE", path: "/admin/mediatype", enum: "mediatype" },
+  ];
+
   const handleSelect = (e: React.MouseEvent<HTMLAnchorElement>) => {
     setSelected(e.currentTarget.innerText);
   };
 
   useEffect(() => {
-    setSelected(window.location.pathname.split("/")[2].toUpperCase() || "");
+    setSelected(
+      menu.find((item) => item.path === window.location.pathname)?.name || ""
+    );
   }, []);
 
   return (
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem className="flex gap-4 ">
-          <Link href="/admin/media" legacyBehavior passHref>
+          {menu.map((item, index) => {
+            return (
+              <Link href={item.path} key={index} legacyBehavior passHref>
+                <NavigationMenuLink
+                  className={cn(navigationMenuTriggerStyle())}
+                  active={selected === item.name}
+                  onClick={handleSelect}
+                >
+                  {item.name}
+                </NavigationMenuLink>
+              </Link>
+            );
+          })}
+          {/* <Link href="/admin/media" legacyBehavior passHref>
             <NavigationMenuLink
               className={cn(navigationMenuTriggerStyle())}
               active={selected === "MEDIA"}
@@ -45,6 +66,15 @@ export function MenuAdmin() {
               TAG
             </NavigationMenuLink>
           </Link>
+          <Link href="/admin/mediatype" legacyBehavior passHref>
+            <NavigationMenuLink
+              className={cn(navigationMenuTriggerStyle())}
+              active={selected === "MEDIA TYPE"}
+              onClick={handleSelect}
+            >
+              MEDIA TYPE
+            </NavigationMenuLink>
+          </Link> */}
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>

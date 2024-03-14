@@ -6,7 +6,7 @@ import { Media } from "@/@types/media";
 
 import { Header } from "../components/Header";
 import { SearchMedia } from "./components/SearchMedia";
-import { MediaTable } from "./components/MediaTable";
+import DataTable from "./components/MediaTable";
 import { Skeleton } from "../components/Skeleton";
 
 import {
@@ -20,6 +20,8 @@ import { ToastContainer, toast } from "react-toastify";
 
 import { useLogin } from "@/hooks/useLogin";
 import { redirect } from "next/navigation";
+import { ColumnDef } from "@tanstack/react-table";
+
 export default function MediaPage() {
   const [loading, setLoading] = useState(true);
 
@@ -39,6 +41,52 @@ export default function MediaPage() {
   const [selectedPhoto, setSelectedPhoto] = useState<Media>({} as Media);
 
   const { token } = useLogin();
+
+  const columns: ColumnDef<Media>[] = [
+    {
+      accessorKey: "name",
+      header: "Name",
+    },
+    {
+      accessorKey: "description",
+      header: "Description",
+    },
+    {
+      accessorKey: "filename",
+      header: "Filename",
+    },
+    {
+      accessorKey: "isPublished",
+      header: "Published",
+    },
+    {
+      accessorKey: "tags",
+      header: "Tags",
+    },
+    {
+      accessorKey: "type",
+      header: "Type",
+    },
+    {
+      accessorKey: "url",
+      header: "URL",
+    },
+    {
+      id: "actions",
+      cell: ({ row }) => {
+        const mediaType = row.original as Media;
+
+        return (
+          // <MediaTypeActions
+          //   onDelete={() => handleDeleteMediaType(mediaType)}
+          //   onEdit={(editMediaType) => handleEditMediaType(editMediaType)}
+          //   mediaType={mediaType}
+          // />
+          <></>
+        );
+      },
+    },
+  ];
 
   const handleDelete = async () => {
     if (selectedPhoto && selectedPhoto._id) {
@@ -124,25 +172,11 @@ export default function MediaPage() {
             setType={setType}
             setTags={setTags}
           />
-          {!loading && photos.length >= 0 && (
-            <MediaTable
-              photos={photos}
-              page={page}
-              perPage={perPage}
-              setPage={setPage}
-              count={count}
-              openConfirmModal={openConfirmModal}
-              setOpenConfirmModal={setOpenConfirmModal}
-              setSelectedPhoto={setSelectedPhoto}
-              handleDelete={handleDelete}
-              handleEdit={() => setOpenAddEditModal(true)}
-            />
-          )}
-          {loading && (
-            <div className="py-4">
-              <Skeleton height={7} />
+          {
+            <div className="mt-4">
+              <DataTable columns={columns} data={photos} loading={loading} />
             </div>
-          )}
+          }
         </div>
       </div>
       <AddMedia
