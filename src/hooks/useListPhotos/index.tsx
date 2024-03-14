@@ -14,7 +14,6 @@ export const useListPhotos = (props?: UseListPhotosProps) => {
 
   const fetchImages = async (tagName?: string) => {
     setLoading(true);
-
     const tag = tagName ? tagName : "all";
     const data = await getMedia(10, 1, "true", "", tag, "all");
     const parsedData = data?.data.map((image) => ({
@@ -31,7 +30,7 @@ export const useListPhotos = (props?: UseListPhotosProps) => {
   };
 
   useEffect(() => {
-    if (props && props.startFetching) {
+    if (props?.startFetching) {
       fetchImages();
     }
   }, []);
