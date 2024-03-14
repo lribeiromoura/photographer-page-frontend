@@ -1,7 +1,7 @@
 export interface Tag {
-  _id: string;
+  _id?: string;
   name: string;
   description: string;
   type: string;
-  __v: 0;
+  __v?: 0;
 }

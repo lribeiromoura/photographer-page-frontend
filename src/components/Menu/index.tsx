@@ -2,7 +2,7 @@
 import { useMediaTypes } from "@/hooks/useMediaTypes";
 import { useMediaTags } from "@/hooks/useTags";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const MenuComponent = () => {
   const [selected, setSelected] = useState("");
@@ -11,6 +11,10 @@ export const MenuComponent = () => {
   const handleSelect = (e: React.MouseEvent<HTMLAnchorElement>) => {
     setSelected(e.currentTarget.innerText);
   };
+
+  useEffect(() => {
+    setSelected(window.location.pathname.split("/")[2] || "");
+  }, []);
 
   return (
     <nav className="flex flex-col items-center gap-6 mb-10 lg:w-1/4 md:w-full">
