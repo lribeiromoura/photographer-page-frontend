@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import { Rubik } from "next/font/google";
 import { MenuComponent } from "@/components/Menu";
 import "react-toastify/dist/ReactToastify.css";
-const inter = Montserrat({ subsets: ["latin"] });
+
+const inter = Rubik({
+  weight: ["300", "400", "500", "700", "900"],
+  style: ["normal", "normal"],
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Photographer Portfolio",
@@ -15,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className={`${inter.className} flex flex-col lg:flex-row my-10`}>
+    <div className={`${inter.className} flex flex-col sm:flex-row my-10`}>
       <MenuComponent />
       <div className="w-3/4">{children}</div>
     </div>

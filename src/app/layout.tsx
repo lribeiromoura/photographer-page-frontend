@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
 
-const inter = Montserrat({ subsets: ["latin"] });
+const inter = Roboto({
+  weight: ["100", "300", "400", "500", "700", "900"],
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Photographer Portfolio",
@@ -17,9 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="w-full h-full">
-      <body
-        className={`${inter.className} flex flex-col lg:flex-row w-full h-full `}
-      >
+      <body className={`${inter.className} flex flex-col w-full h-full p-10`}>
         <div className="w-full h-full">{children}</div>
       </body>
     </html>
