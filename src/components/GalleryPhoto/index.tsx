@@ -25,14 +25,13 @@ export const GalleryPhoto = ({
     <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 items-center">
       <Gallery key={index} options={options}>
         {images.map((image: any, i: number) => {
+          const imageUrl = `data:image/jpeg;base64,${image.data}`;
           return (
             <Item
               key={i}
               id={image.id}
-              original={image.src}
-              thumbnail={image.src}
-              width={image.width}
-              height={image.height}
+              original={imageUrl}
+              thumbnail={imageUrl}
             >
               {({ ref, open }) => (
                 <Image
@@ -43,7 +42,7 @@ export const GalleryPhoto = ({
                   height={image.height}
                   onClick={open}
                   loader={() => image.src}
-                  src={image.src}
+                  src={imageUrl}
                 />
               )}
             </Item>

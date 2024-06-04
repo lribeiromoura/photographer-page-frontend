@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="w-full h-full">
-      <body className={`${inter.className} flex flex-col w-full h-full p-10`}>
+      <body className={`${inter.className} flex flex-col w-full h-full`}>
         <div className="w-full h-full">{children}</div>
       </body>
     </html>

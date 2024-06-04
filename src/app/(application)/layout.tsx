@@ -21,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className={`${inter.className} flex flex-col sm:flex-row my-10`}>
+    <div className={`${inter.className} flex flex-col my-10 p-10 sm:flex-row`}>
       <MenuComponent />
       <div className="w-3/4">{children}</div>
     </div>

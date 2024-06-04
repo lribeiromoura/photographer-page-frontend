@@ -2,9 +2,10 @@ export interface Media {
   _id?: string;
   name: string;
   description: string;
-  filename: string;
+  filename?: string;
+  data?: Buffer | string;
   url: string;
-  isPublished: boolean;
+  isPublished: boolean | string;
   tags: string;
   type: string;
   __v?: number;

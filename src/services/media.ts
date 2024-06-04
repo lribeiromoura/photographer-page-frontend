@@ -44,15 +44,25 @@ export const deleteMedia = async (id: string) => {
   }
 };
 
-export const createMedia = async (media: Media) => {
+export const createMedia = async (media: Media, file: File | null) => {
   try {
+    const formData = new FormData();
+    formData.append("name", media.name);
+    formData.append("description", media.description);
+    formData.append("url", media.url);
+    formData.append("isPublished", media.isPublished ? "true" : "false");
+    formData.append("tags", media.tags);
+    formData.append("type", media.type);
+    if (file) {
+      formData.append("file", file);
+    }
+
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/medias`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         authorization: `Bearer ${localStorage.getItem("access_token")}`,
       },
-      body: JSON.stringify(media),
+      body: formData,
     }).then((res) => res.json());
     return response;
   } catch (error) {

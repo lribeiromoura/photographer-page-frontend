@@ -1,9 +1,11 @@
 import { Media, MediaTags, MediaType } from "@/@types/media";
-import { useCallback } from "react";
+import { useMediaTags } from "@/hooks/useTags";
+import { set } from "date-fns";
+import { ChangeEvent, useCallback, useState } from "react";
 
 type AddMediaProps = {
   isOpen: boolean;
-  handleAddMedia: () => void;
+  handleAddMedia: (file: File) => void;
   handleCancel: () => void;
   setSelectedPhoto: (photo: Media) => void;
   selectedPhoto: Media;
@@ -16,15 +18,37 @@ export const AddMedia = ({
   handleAddMedia,
   handleCancel,
 }: AddMediaProps) => {
+  const { tags } = useMediaTags();
+  const [file, setFile] = useState<File | null>(null);
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setFile(e.target.files[0]);
+    }
+  };
+
   const handleDisable = useCallback(() => {
-    return (
-      !selectedPhoto.name ||
-      !selectedPhoto.url ||
-      !selectedPhoto.filename ||
-      !selectedPhoto.type ||
-      !selectedPhoto.tags
-    );
+    return !selectedPhoto.name || !selectedPhoto.type || !selectedPhoto.tags;
   }, [selectedPhoto]);
+
+  const onAddMedia = useCallback(async () => {
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("name", selectedPhoto.name);
+      formData.append("description", selectedPhoto.description);
+      formData.append("url", selectedPhoto.url);
+      formData.append("isPublished", selectedPhoto.isPublished.toString());
+      formData.append("tags", selectedPhoto.tags);
+      formData.append("type", selectedPhoto.type);
+
+      setSelectedPhoto({
+        ...selectedPhoto,
+        filename: file.name,
+      });
+      handleAddMedia(file);
+    }
+  }, [file, selectedPhoto, handleAddMedia]);
   return (
     isOpen && (
       <main className="absolute top-0 left-0 self-center w-full antialiased bg-transparent-900 text-gray-900 font-sans overflow-x-hidden w-full h-full">
@@ -74,40 +98,19 @@ export const AddMedia = ({
                 </div>
               </div>
               <div className="block gap-4 mt-3 xl:grid xl:grid-flow-col">
-                <div className="group relative min-w-72 md:w-80 lg:w-full">
-                  <label className="block w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-purple-400">
-                    Filename
-                  </label>
-                  <input
-                    id="1"
-                    type="text"
-                    value={selectedPhoto?.filename || ""}
-                    onChange={(e) =>
-                      setSelectedPhoto({
-                        ...selectedPhoto,
-                        filename: e.target.value,
-                      })
-                    }
-                    className="peer h-10 w-full rounded-md bg-gray-50 px-4  outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-purple-400"
-                  />
-                </div>
-                <div className="group relative min-w-72 md:w-80 lg:w-full">
-                  <label className="block w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-purple-400">
-                    Url
-                  </label>
-                  <input
-                    id="1"
-                    type="text"
-                    value={selectedPhoto?.url || ""}
-                    onChange={(e) =>
-                      setSelectedPhoto({
-                        ...selectedPhoto,
-                        url: e.target.value,
-                      })
-                    }
-                    className="peer h-10 w-full rounded-md bg-gray-50 px-4  outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-purple-400"
-                  />
-                </div>
+                {
+                  <div className="group relative min-w-72 md:w-80 lg:w-full">
+                    <label className="block w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-purple-400">
+                      Arquivo
+                    </label>
+                    <input
+                      id="1"
+                      type="file"
+                      onChange={handleFileChange}
+                      className="peer h-10 w-full rounded-md bg-gray-50 px-4  outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-purple-400"
+                    />
+                  </div>
+                }
               </div>
               <div className="block gap-4 mt-3 xl:grid xl:grid-flow-col">
                 <div className="group relative min-w-72 md:w-80 lg:w-96">
@@ -117,7 +120,9 @@ export const AddMedia = ({
                   <input
                     id="1"
                     type="checkbox"
-                    checked={selectedPhoto.isPublished || false}
+                    checked={
+                      selectedPhoto.isPublished === "true" ? true : false
+                    }
                     onChange={(e) =>
                       setSelectedPhoto({
                         ...selectedPhoto,
@@ -144,9 +149,9 @@ export const AddMedia = ({
                     className="peer h-10 w-full rounded-md bg-gray-50 px-4 outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-purple-400"
                   >
                     <option value={""}>Select Tag</option>
-                    {Object.entries(MediaTags).map(([key, value]) => (
-                      <option key={key} value={key} className="">
-                        {value}
+                    {tags.map((tag) => (
+                      <option key={tag.name} value={tag.name} className="">
+                        {tag.name}
                       </option>
                     ))}
                   </select>
@@ -178,7 +183,7 @@ export const AddMedia = ({
             </form>
             <div className="text-center md:text-right mt-4 md:flex md:justify-end">
               <button
-                onClick={handleAddMedia}
+                onClick={onAddMedia}
                 disabled={handleDisable()}
                 className="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 bg-purple-200 text-purple-700 rounded-lg font-semibold text-sm md:ml-2 md:order-2"
               >
