@@ -33,7 +33,7 @@ export const Login = ({
                 value={username}
                 type="email"
                 placeholder="Email"
-                className="w-full p-3 rounded border placeholder-gray-400 focus:outline-none focus:border-black-600 "
+                className="w-full p-3 rounded border placeholder-gray-400 focus:outline-none focus:border-black-600 text-black"
               />
             </div>
             <div className="mb-4">
@@ -42,7 +42,7 @@ export const Login = ({
                 value={password}
                 type="password"
                 placeholder="Password"
-                className="w-full p-3 rounded border placeholder-gray-400 focus:outline-none focus:border-black-600"
+                className="w-full p-3 rounded border placeholder-gray-400 focus:outline-none focus:border-black-600 text-black"
               />
             </div>
             <button
