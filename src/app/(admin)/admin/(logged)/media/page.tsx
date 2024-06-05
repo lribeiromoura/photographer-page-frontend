@@ -7,7 +7,6 @@ import { Media } from "@/@types/media";
 import { Header } from "../components/Header";
 import { SearchMedia } from "./components/SearchMedia";
 import DataTable from "./components/MediaTable";
-import { Skeleton } from "../components/Skeleton";
 
 import {
   createMedia,
@@ -21,6 +20,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useLogin } from "@/hooks/useLogin";
 import { redirect } from "next/navigation";
 import { ColumnDef } from "@tanstack/react-table";
+import { MediaTypeActions } from "../mediatype/components/AddEditMediaType/components/MediaTypeActions";
 
 export default function MediaPage() {
   const [loading, setLoading] = useState(true);
@@ -78,8 +78,8 @@ export default function MediaPage() {
 
         return (
           // <MediaTypeActions
-          //   onDelete={() => handleDeleteMediaType(mediaType)}
-          //   onEdit={(editMediaType) => handleEditMediaType(editMediaType)}
+          //   onDelete={() => handleDelete()}
+          //   onEdit={(editMediaType) => handleAddEdit()}
           //   mediaType={mediaType}
           // />
           <></>
@@ -97,15 +97,19 @@ export default function MediaPage() {
     }
   };
 
-  const handleAddEdit = async () => {
+  const handleAddEdit = async (file: File) => {
     try {
       const type = selectedPhoto._id ? "edit" : "add";
       let response;
       if (type === "add") {
-        response = await createMedia({
-          ...selectedPhoto,
-          isPublished: selectedPhoto.isPublished ? true : false,
-        });
+        response = await createMedia(
+          {
+            ...selectedPhoto,
+
+            isPublished: selectedPhoto.isPublished ? "true" : "false",
+          },
+          file
+        );
       } else {
         response = await editMedia(selectedPhoto);
       }
@@ -181,7 +185,7 @@ export default function MediaPage() {
       </div>
       <AddMedia
         isOpen={openAddEditModal}
-        handleAddMedia={() => handleAddEdit()}
+        handleAddMedia={(file) => handleAddEdit(file)}
         handleCancel={() => {
           setOpenAddEditModal(false);
           setSelectedPhoto({} as Media);
