@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { getMedia } from "@/services/media";
-import { Media } from "@/@types/media";
-import { getImgSize } from "@/util/getImageSize";
+import { useEffect, useState } from 'react';
+import { getMedia } from '@/services/media';
+import { Media } from '@/@types/media';
+import { getImgSize } from '@/util/getImageSize';
 interface UseListPhotosProps {
   startFetching?: boolean;
 }
@@ -14,8 +14,8 @@ export const useListPhotos = (props?: UseListPhotosProps) => {
 
   const fetchImages = async (tagName?: string) => {
     setLoading(true);
-    const tag = tagName ? tagName : "all";
-    const data = await getMedia(10, 1, "true", "", tag, "all");
+    const tag = tagName ? tagName : 'all';
+    const data = await getMedia(10, 1, 'true', '', tag, 'all');
     const parsedData = data?.data.map((image) => ({
       ...image,
       src: image.url,

@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import {
   getAllMediaTypeService,
   mediaTypeByIdService,
   createMediaTypeService,
   editMediaTypeService,
   deleteMediaTypeService,
-} from "@/services/mediatype";
-import { MediaType } from "@/@types/mediatype";
+} from '@/services/mediatype';
+import { MediaType } from '@/@types/mediatype';
 
 export const useMediaTypes = () => {
   const [loadingMediaTypes, setLoadingMediaTypes] = useState(false);
@@ -21,7 +21,7 @@ export const useMediaTypes = () => {
       }
       return response;
     } catch (error) {
-      console.log("error", error);
+      console.log('error', error);
     } finally {
       setLoadingMediaTypes(false);
     }
@@ -37,7 +37,7 @@ export const useMediaTypes = () => {
       }
       return response;
     } catch (error) {
-      console.log("error", error);
+      console.log('error', error);
     } finally {
       setLoadingMediaTypes(false);
     }
@@ -53,7 +53,7 @@ export const useMediaTypes = () => {
       }
       return response;
     } catch (error) {
-      console.log("error", error);
+      console.log('error', error);
     } finally {
       setLoadingMediaTypes(false);
     }
@@ -69,7 +69,7 @@ export const useMediaTypes = () => {
       }
       return response;
     } catch (error) {
-      console.log("error", error);
+      console.log('error', error);
     } finally {
       setLoadingMediaTypes(false);
     }
@@ -85,7 +85,7 @@ export const useMediaTypes = () => {
       }
       return response;
     } catch (error) {
-      console.log("error", error);
+      console.log('error', error);
     } finally {
       setLoadingMediaTypes(false);
     }

@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button";
-import { DialogFooter, DialogTitle } from "@/components/ui/dialog";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { Button } from '@/components/ui/button';
+import { DialogFooter, DialogTitle } from '@/components/ui/dialog';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 import {
   Form,
   FormControl,
@@ -10,9 +10,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { MediaType } from "@/@types/mediatype";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { MediaType } from '@/@types/mediatype';
 
 interface AddEditMediaTypeProps {
   onConfirm: (mediaType: MediaType) => void;
@@ -30,7 +30,7 @@ export const AddEditMediaType = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: mediaType?.name || "",
+      name: mediaType?.name || '',
     },
   });
 

@@ -1,9 +1,9 @@
-"use client";
-import React from "react";
+'use client';
+import React from 'react';
 
-import { Login } from "./(logged)/components/Login";
+import { Login } from './(logged)/components/Login';
 
-import { useLogin } from "@/hooks/useLogin";
+import { useLogin } from '@/hooks/useLogin';
 
 export default function Admin() {
   const {

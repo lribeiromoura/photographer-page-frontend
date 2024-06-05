@@ -1,5 +1,5 @@
 export const getImgSize = (imgSrc: string) => {
-  var newImg = new Image();
+  const newImg = new Image();
 
   newImg.src = imgSrc;
   return {

@@ -1,5 +1,5 @@
-import { MediaTags, MediaType } from "@/@types/media";
-import { debounce } from "@/util/debounce";
+import { MediaTags, MediaType } from '@/@types/media';
+import { debounce } from '@/util/debounce';
 
 type SearchMediaProps = {
   setSearch: (value: string) => void;
@@ -22,8 +22,8 @@ export const SearchMedia = ({
         <div>
           <span className="text-white">Search</span>
         </div>
-        <div className="block relative">
-          <span className="h-full absolute inset-y-0 left-0 flex items-center pl-2">
+        <div className="relative block">
+          <span className="absolute inset-y-0 left-0 flex h-full items-center pl-2">
             <svg
               viewBox="0 0 24 24"
               className="h-4 w-4 fill-current text-gray-500"
@@ -37,24 +37,24 @@ export const SearchMedia = ({
               debounce(() => {
                 e.target.value.length > 2
                   ? setSearch(e.target.value)
-                  : setSearch("");
+                  : setSearch('');
               }, 1000)()
             }
-            className="appearance-none rounded border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
+            className="block w-full appearance-none rounded border border-b border-gray-400 bg-white py-2 pl-8 pr-6 text-sm text-gray-700 placeholder-gray-400 focus:bg-white focus:text-gray-700 focus:placeholder-gray-600 focus:outline-none"
           />
         </div>
       </div>
-      <div className="my-2 flex sm:flex-row flex-col gap-2 justify-between">
-        <div className="flex flex-row mb-1 sm:mb-0 gap-2 w-full">
-          <div className="flex flex-col w-full">
+      <div className="my-2 flex flex-col justify-between gap-2 sm:flex-row">
+        <div className="mb-1 flex w-full flex-row gap-2 sm:mb-0">
+          <div className="flex w-full flex-col">
             <label>
-              <span className="hidden sm:inline-block text-white">
+              <span className="hidden text-white sm:inline-block">
                 Per Page
               </span>
             </label>
             <div className="relative">
               <select
-                className="h-full rounded border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="block h-full w-full appearance-none rounded border border-gray-400 bg-white px-4 py-2 pr-8 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
                 onChange={(e) => setPerPage(Number(e.target.value))}
               >
                 <option>10</option>
@@ -63,7 +63,7 @@ export const SearchMedia = ({
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg
-                  className="fill-current h-4 w-4"
+                  className="h-4 w-4 fill-current"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                 >
@@ -72,22 +72,22 @@ export const SearchMedia = ({
               </div>
             </div>
           </div>
-          <div className="flex flex-col w-full">
+          <div className="flex w-full flex-col">
             <label>
-              <span className="hidden sm:inline-block text-white">Status</span>
+              <span className="hidden text-white sm:inline-block">Status</span>
             </label>
             <div className="relative">
               <select
                 onChange={(e) => setActive(e.target.value)}
-                className="h-full rounded border-t sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500"
+                className="block h-full w-full appearance-none rounded border-b border-r border-t border-gray-400 bg-white px-4 py-2 pr-8 leading-tight text-gray-700 focus:border-l focus:border-r focus:border-gray-500 focus:bg-white focus:outline-none sm:border-r-0"
               >
-                <option value={"all"}>All</option>
-                <option value={"true"}>Active</option>
-                <option value={"false"}>Inactive</option>
+                <option value={'all'}>All</option>
+                <option value={'true'}>Active</option>
+                <option value={'false'}>Inactive</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg
-                  className="fill-current h-4 w-4"
+                  className="h-4 w-4 fill-current"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                 >
@@ -96,18 +96,18 @@ export const SearchMedia = ({
               </div>
             </div>
           </div>
-          <div className="flex flex-col w-full">
+          <div className="flex w-full flex-col">
             <label>
-              <span className="hidden sm:inline-block text-white">
+              <span className="hidden text-white sm:inline-block">
                 Media Type
               </span>
             </label>
             <div className="relative">
               <select
                 onChange={(e) => setType(e.target.value)}
-                className="h-full rounded border-t sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500"
+                className="block h-full w-full appearance-none rounded border-b border-r border-t border-gray-400 bg-white px-4 py-2 pr-8 leading-tight text-gray-700 focus:border-l focus:border-r focus:border-gray-500 focus:bg-white focus:outline-none sm:border-r-0"
               >
-                <option value={"all"}>All</option>
+                <option value={'all'}>All</option>
                 {Object.entries(MediaType).map(([key, value]) => (
                   <option key={key} value={key}>
                     {value}
@@ -116,7 +116,7 @@ export const SearchMedia = ({
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg
-                  className="fill-current h-4 w-4"
+                  className="h-4 w-4 fill-current"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                 >
@@ -125,16 +125,16 @@ export const SearchMedia = ({
               </div>
             </div>
           </div>
-          <div className="flex flex-col w-full">
+          <div className="flex w-full flex-col">
             <label>
-              <span className="hidden sm:inline-block text-white">
+              <span className="hidden text-white sm:inline-block">
                 Category
               </span>
             </label>
             <div className="relative">
               <select
                 onChange={(e) => setTags(e.target.value)}
-                className="h-full rounded border-t sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500"
+                className="block h-full w-full appearance-none rounded border-b border-r border-t border-gray-400 bg-white px-4 py-2 pr-8 leading-tight text-gray-700 focus:border-l focus:border-r focus:border-gray-500 focus:bg-white focus:outline-none sm:border-r-0"
               >
                 <option value="all">All</option>
                 {Object.entries(MediaTags).map(([key, value]) => (
@@ -145,7 +145,7 @@ export const SearchMedia = ({
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center justify-center px-2 text-gray-700">
                 <svg
-                  className="fill-current h-4 w-4"
+                  className="h-4 w-4 fill-current"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                 >

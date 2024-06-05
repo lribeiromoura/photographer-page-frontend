@@ -19,21 +19,21 @@ export interface Media {
 
 export type MediaCreate = Exclude<
   Media,
-  "_id" | "__v" | "createdAt" | "updatedAt"
+  '_id' | '__v' | 'createdAt' | 'updatedAt'
 >;
 
 export enum MediaTags {
-  SHOW = "Show",
-  CLIP = "Clip",
-  PLACE = "Place",
-  EVENT = "Event",
-  PEOPLE = "People",
-  OTHER = "Other",
+  SHOW = 'Show',
+  CLIP = 'Clip',
+  PLACE = 'Place',
+  EVENT = 'Event',
+  PEOPLE = 'People',
+  OTHER = 'Other',
 }
 
 export enum MediaType {
-  VIDEO = "Video",
-  PHOTO = "Photo",
+  VIDEO = 'Video',
+  PHOTO = 'Photo',
 }
 
 export interface MediaResponse {

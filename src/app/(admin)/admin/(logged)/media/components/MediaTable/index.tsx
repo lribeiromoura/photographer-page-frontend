@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
-} from "@tanstack/react-table";
+} from '@tanstack/react-table';
 
 import {
   Table,
@@ -14,10 +14,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Copy } from "lucide-react";
+} from '@/components/ui/table';
+import { Copy } from 'lucide-react';
 
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface DataTableProps<TData, TValue> {
   loading?: boolean;
@@ -36,11 +36,6 @@ export default function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
   });
 
-  const handleconsole = (e: any) => {
-    debugger;
-    return e.toString();
-  };
-
   return (
     <div className="rounded-md border">
       <Table>
@@ -54,7 +49,7 @@ export default function DataTable<TData, TValue>({
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
-                          header.getContext()
+                          header.getContext(),
                         )}
                   </TableHead>
                 );
@@ -67,16 +62,16 @@ export default function DataTable<TData, TValue>({
             ? table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
+                  data-state={row.getIsSelected() && 'selected'}
                 >
                   {row.getVisibleCells().map((cell) =>
-                    cell.column.id === "url" ? (
+                    cell.column.id === 'url' ? (
                       <TableCell
                         key={cell.id}
                         className="pointer-events-auto cursor-pointer"
                         onClick={() => {
                           navigator.clipboard.writeText(
-                            cell.row.renderValue(cell.column.id)
+                            cell.row.renderValue(cell.column.id),
                           );
                         }}
                       >
@@ -86,10 +81,10 @@ export default function DataTable<TData, TValue>({
                       <TableCell key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
-                          cell.getContext()
+                          cell.getContext(),
                         )}
                       </TableCell>
-                    )
+                    ),
                   )}
                 </TableRow>
               ))
@@ -97,7 +92,7 @@ export default function DataTable<TData, TValue>({
                 <TableRow key={index}>
                   {Array.from({ length: 7 }).map((_, index) => (
                     <TableCell key={index}>
-                      <Skeleton className="w-[100px] h-[20px] rounded-full bg-white" />
+                      <Skeleton className="h-[20px] w-[100px] rounded-full bg-white" />
                     </TableCell>
                   ))}
                 </TableRow>

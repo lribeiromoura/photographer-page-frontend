@@ -1,6 +1,6 @@
-import { Tag } from "@/@types/tag";
-import { capitalizeFirstLetter } from "@/util/capitalize";
-import Link from "next/link";
+import { Tag } from '@/@types/tag';
+import { capitalizeFirstLetter } from '@/util/capitalize';
+import Link from 'next/link';
 
 interface MenuListProps {
   tags: Tag[];
@@ -9,7 +9,7 @@ interface MenuListProps {
 }
 export const MenuList = ({ tags, selected, handleSelect }: MenuListProps) => {
   return (
-    <ul className="flex flex-col gap-4 text-sm ">
+    <ul className="flex flex-col gap-4 text-sm">
       {tags.map.length > 0 &&
         tags.map((tag) => (
           <li key={tag._id}>
@@ -18,8 +18,8 @@ export const MenuList = ({ tags, selected, handleSelect }: MenuListProps) => {
               onClick={handleSelect}
               className={
                 selected === capitalizeFirstLetter(tag.name)
-                  ? "font-bold text-black"
-                  : "text-black"
+                  ? 'font-bold text-black'
+                  : 'text-black'
               }
             >
               {capitalizeFirstLetter(tag.name)}
@@ -29,7 +29,7 @@ export const MenuList = ({ tags, selected, handleSelect }: MenuListProps) => {
       <li>
         <div
           className={
-            selected === "Contact" ? "font-bold text-black" : "text-black"
+            selected === 'Contact' ? 'font-bold text-black' : 'text-black'
           }
         >
           Contact

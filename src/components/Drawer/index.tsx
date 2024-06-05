@@ -1,6 +1,6 @@
 // components/Drawer.js
-import { use, useEffect, useRef, useState } from "react";
-import { MenuIcon, XCircle } from "lucide-react";
+import { useEffect, useRef, useState } from 'react';
+import { MenuIcon, XCircle } from 'lucide-react';
 
 interface DrawerProps {
   children: React.ReactNode;
@@ -23,40 +23,40 @@ const Drawer = ({ children }: DrawerProps) => {
 
   useEffect(() => {
     if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener('mousedown', handleClickOutside);
     } else {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isOpen]);
 
   return (
     <>
-      <button onClick={toggleDrawer} className="z-50 p-2 rounded-md">
+      <button onClick={toggleDrawer} className="z-50 rounded-md p-2">
         <MenuIcon />
       </button>
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black opacity-50 z-40"
+          className="fixed inset-0 z-40 bg-black opacity-50"
           onClick={toggleDrawer}
         ></div>
       )}
       <div
-        className={`fixed top-0 right-0 h-full w-64 bg-white shadow-lg transform transition-transform z-50 ${
-          isOpen ? "translate-x-0" : "translate-x-full"
+        className={`fixed right-0 top-0 z-50 h-full w-64 transform bg-white shadow-lg transition-transform ${
+          isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         ref={drawerRef}
       >
         <button
           onClick={toggleDrawer}
-          className="absolute top-4 right-4  p-2 rounded-md"
+          className="absolute right-4 top-4 rounded-md p-2"
         >
           <XCircle />
         </button>
-        <div className="pt-2 pl-6 overflow-y-auto mt-4" onClick={toggleDrawer}>
+        <div className="mt-4 overflow-y-auto pl-6 pt-2" onClick={toggleDrawer}>
           {children}
         </div>
       </div>

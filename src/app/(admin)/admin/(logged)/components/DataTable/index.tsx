@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
-} from "@tanstack/react-table";
+} from '@tanstack/react-table';
 
 import {
   Table,
@@ -14,9 +14,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface DataTableProps<TData, TValue> {
   loading?: boolean;
@@ -48,7 +48,7 @@ export default function DataTable<TData, TValue>({
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
-                          header.getContext()
+                          header.getContext(),
                         )}
                   </TableHead>
                 );
@@ -61,13 +61,13 @@ export default function DataTable<TData, TValue>({
             ? table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
+                  data-state={row.getIsSelected() && 'selected'}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}
@@ -77,7 +77,7 @@ export default function DataTable<TData, TValue>({
                 <TableRow key={index}>
                   {Array.from({ length: 3 }).map((_, index) => (
                     <TableCell key={index}>
-                      <Skeleton className="w-[100px] h-[20px] rounded-full bg-white" />
+                      <Skeleton className="h-[20px] w-[100px] rounded-full bg-white" />
                     </TableCell>
                   ))}
                 </TableRow>

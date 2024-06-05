@@ -1,7 +1,7 @@
-"use client";
-import Image from "next/image";
-import { Gallery, Item } from "react-photoswipe-gallery";
-import { Media } from "@/@types/media";
+'use client';
+import Image from 'next/image';
+import { Gallery, Item } from 'react-photoswipe-gallery';
+import { Media } from '@/@types/media';
 
 interface GalleryPhotoProps {
   images: Media[];
@@ -14,6 +14,7 @@ export const GalleryPhoto = ({
   setIndex,
   index,
 }: GalleryPhotoProps) => {
+  console.log(setIndex);
   const options = {
     zoom: false,
     close: false,
@@ -22,7 +23,7 @@ export const GalleryPhoto = ({
     padding: { top: 20, bottom: 40, left: 100, right: 100 },
   };
   return (
-    <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 items-center">
+    <div className="grid grid-cols-2 items-center gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
       <Gallery key={index} options={options}>
         {images.map((image: any, i: number) => {
           const imageUrl = `data:image/jpeg;base64,${image.data}`;
