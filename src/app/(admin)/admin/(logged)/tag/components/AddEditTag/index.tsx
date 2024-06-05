@@ -1,15 +1,15 @@
-import { Button } from "@/components/ui/button";
-import { DialogFooter, DialogTitle } from "@/components/ui/dialog";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { Button } from '@/components/ui/button';
+import { DialogFooter, DialogTitle } from '@/components/ui/dialog';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 import {
   Form,
   FormControl,
@@ -17,10 +17,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Tag } from "@/@types/tag";
-import { MediaType } from "@/@types/mediatype";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Tag } from '@/@types/tag';
+import { MediaType } from '@/@types/mediatype';
 
 interface AddEditTagProps {
   onConfirm: (tag: Tag) => void;
@@ -38,9 +38,9 @@ export const AddEditTag = ({ onConfirm, tag, mediaTypes }: AddEditTagProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: tag?.name || "",
-      description: tag?.description || "",
-      type: tag?.type || "",
+      name: tag?.name || '',
+      description: tag?.description || '',
+      type: tag?.type || '',
     },
   });
 

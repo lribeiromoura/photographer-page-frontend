@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
-  const currentUser = request.cookies.get("currentUser")?.value;
+  const currentUser = request.cookies.get('currentUser')?.value;
 
   if (currentUser) {
-    return NextResponse.redirect(new URL("/admin/photo", request.url));
+    return NextResponse.redirect(new URL('/admin/photo', request.url));
   } else {
     // return NextResponse.redirect(new URL("/admin", request.url));
   }

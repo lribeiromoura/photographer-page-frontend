@@ -1,18 +1,18 @@
-import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import {
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 
-import { Button } from "@/components/ui/button";
-import { MoreHorizontal, CircleX, SquarePen } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import { MoreHorizontal, CircleX, SquarePen } from 'lucide-react';
 
-import { DialogItem } from "@/app/(admin)/admin/(logged)/components/DialogItem";
-import { AddEditTag } from "../..";
-import { DeleteDialog } from "@/app/(admin)/admin/(logged)/components/DeleteDialog";
-import { Tag } from "@/@types/tag";
-import { MediaType } from "@/@types/mediatype";
+import { DialogItem } from '@/app/(admin)/admin/(logged)/components/DialogItem';
+import { AddEditTag } from '../..';
+import { DeleteDialog } from '@/app/(admin)/admin/(logged)/components/DeleteDialog';
+import { Tag } from '@/@types/tag';
+import { MediaType } from '@/@types/mediatype';
 
 interface TagActionsProps {
   tag: Tag;
@@ -31,7 +31,7 @@ export const TagActions = ({
     onEdit(tag);
   };
   return (
-    <div className="text-right pr-4">
+    <div className="pr-4 text-right">
       <DropdownMenu.Root>
         <DropdownMenuTrigger asChild>
           <Button variant="secondary" className="h-8 w-8 p-0 align-middle">
@@ -43,9 +43,9 @@ export const TagActions = ({
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DialogItem
             triggerChildren={
-              <div className="flex items-center my-2">
+              <div className="my-2 flex items-center">
                 <SquarePen />
-                <p className="pl-2 ">Edit</p>
+                <p className="pl-2">Edit</p>
               </div>
             }
           >
@@ -57,7 +57,7 @@ export const TagActions = ({
           </DialogItem>
           <DialogItem
             triggerChildren={
-              <div className="flex items-center my-2">
+              <div className="my-2 flex items-center">
                 <CircleX color="red" />
                 <p className="pl-2">Delete</p>
               </div>

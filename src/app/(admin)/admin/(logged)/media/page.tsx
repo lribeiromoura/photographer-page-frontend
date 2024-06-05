@@ -1,80 +1,74 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { Media } from "@/@types/media";
+import { Media } from '@/@types/media';
 
-import { Header } from "../components/Header";
-import { SearchMedia } from "./components/SearchMedia";
-import DataTable from "./components/MediaTable";
+import { Header } from '../components/Header';
+import { SearchMedia } from './components/SearchMedia';
+import DataTable from './components/MediaTable';
 
-import {
-  createMedia,
-  deleteMedia,
-  editMedia,
-  getMedia,
-} from "@/services/media";
-import { AddMedia } from "./components/AddMedia";
-import { ToastContainer, toast } from "react-toastify";
+import { createMedia, editMedia, getMedia } from '@/services/media';
+import { AddMedia } from './components/AddMedia';
+import { ToastContainer, toast } from 'react-toastify';
 
-import { useLogin } from "@/hooks/useLogin";
-import { redirect } from "next/navigation";
-import { ColumnDef } from "@tanstack/react-table";
-import { MediaTypeActions } from "../mediatype/components/AddEditMediaType/components/MediaTypeActions";
+import { redirect } from 'next/navigation';
+import { ColumnDef } from '@tanstack/react-table';
 
 export default function MediaPage() {
   const [loading, setLoading] = useState(true);
 
-  const [active, setActive] = useState<string>("all");
-  const [search, setSearch] = useState<string>("");
-  const [tags, setTags] = useState<string>("all");
-  const [type, setType] = useState<string>("all");
+  const [active, setActive] = useState<string>('all');
+  const [search, setSearch] = useState<string>('');
+  const [tags, setTags] = useState<string>('all');
+  const [type, setType] = useState<string>('all');
   const [count, setCount] = useState(0);
-  const [page, setPage] = useState(1);
+  const page = 1;
   const [perPage, setPerPage] = useState(10);
 
   const [photos, setPhotos] = useState<Media[]>([]);
 
-  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  // const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [openAddEditModal, setOpenAddEditModal] = useState(false);
 
   const [selectedPhoto, setSelectedPhoto] = useState<Media>({} as Media);
 
-  const { token } = useLogin();
+  // const { token } = useLogin();
 
   const columns: ColumnDef<Media>[] = [
     {
-      accessorKey: "name",
-      header: "Name",
+      accessorKey: 'name',
+      header: 'Name',
     },
     {
-      accessorKey: "description",
-      header: "Description",
+      accessorKey: 'description',
+      header: 'Description',
     },
     {
-      accessorKey: "filename",
-      header: "Filename",
+      accessorKey: 'filename',
+      header: 'Filename',
     },
     {
-      accessorKey: "isPublished",
-      header: "Published",
+      accessorKey: 'isPublished',
+      header: 'Published',
     },
     {
-      accessorKey: "tags",
-      header: "Tags",
+      accessorKey: 'tags',
+      header: 'Tags',
     },
     {
-      accessorKey: "type",
-      header: "Type",
+      accessorKey: 'type',
+      header: 'Type',
     },
     {
-      accessorKey: "url",
-      header: "URL",
+      accessorKey: 'url',
+      header: 'URL',
     },
     {
-      id: "actions",
+      id: 'actions',
       cell: ({ row }) => {
-        const mediaType = row.original as Media;
+        console.log(row);
+        // const mediaType = row.original as Media;
 
         return (
           // <MediaTypeActions
@@ -88,44 +82,45 @@ export default function MediaPage() {
     },
   ];
 
-  const handleDelete = async () => {
-    if (selectedPhoto && selectedPhoto._id) {
-      await deleteMedia(selectedPhoto._id);
-      setSelectedPhoto({} as Media);
-      fetchPhotos();
-      setOpenConfirmModal(false);
-    }
-  };
+  // const handleDelete = async () => {
+  //   if (selectedPhoto && selectedPhoto._id) {
+  //     await deleteMedia(selectedPhoto._id);
+  //     setSelectedPhoto({} as Media);
+  //     fetchPhotos();
+  //     console.log(openConfirmModal);
+  //     setOpenConfirmModal(false);
+  //   }
+  // };
 
   const handleAddEdit = async (file: File) => {
     try {
-      const type = selectedPhoto._id ? "edit" : "add";
+      const type = selectedPhoto._id ? 'edit' : 'add';
       let response;
-      if (type === "add") {
+      if (type === 'add') {
         response = await createMedia(
           {
             ...selectedPhoto,
 
-            isPublished: selectedPhoto.isPublished ? "true" : "false",
+            isPublished: selectedPhoto.isPublished ? 'true' : 'false',
           },
-          file
+          file,
         );
       } else {
         response = await editMedia(selectedPhoto);
       }
       if (response?.error || response?.ok === false) {
         console.log(response);
-        toast.error(`Error: ${response.message.join(", ")}`);
+        toast.error(`Error: ${response.message.join(', ')}`);
       } else {
         toast.success(
-          `Media ${type === "add" ? "added" : "edited"} successfully`
+          `Media ${type === 'add' ? 'added' : 'edited'} successfully`,
         );
         fetchPhotos();
         setOpenAddEditModal(false);
         setSelectedPhoto({} as Media);
       }
     } catch (error) {
-      console.error("Error adding/editing media", error);
+      console.error('Error adding/editing media', error);
     }
   };
 
@@ -138,22 +133,23 @@ export default function MediaPage() {
         active,
         search,
         tags,
-        type
+        type,
       );
       if (response) {
+        console.log(count);
         setCount(response.total);
         setPhotos(response.data);
       }
     } catch (error) {
-      console.error("Error fetching photos", error);
+      console.error('Error fetching photos', error);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (localStorage.getItem("access_token") === null) {
-      redirect("/admin");
+    if (localStorage.getItem('access_token') === null) {
+      redirect('/admin');
       return;
     }
     fetchPhotos();

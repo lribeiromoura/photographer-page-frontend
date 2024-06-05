@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { useMediaTags } from "@/hooks/useTags";
-import DataTable from "../components/DataTable";
-import { Header } from "../components/Header";
-import { Tag } from "@/@types/tag";
-import { ColumnDef } from "@tanstack/react-table";
-import { TagActions } from "./components/AddEditTag/components/TagActions";
-import { useState } from "react";
-import { AddEditTag } from "./components/AddEditTag";
-import { useMediaTypes } from "@/hooks/useMediaTypes";
+import { useMediaTags } from '@/hooks/useTags';
+import DataTable from '../components/DataTable';
+import { Header } from '../components/Header';
+import { Tag } from '@/@types/tag';
+import { ColumnDef } from '@tanstack/react-table';
+import { TagActions } from './components/AddEditTag/components/TagActions';
+import { useState } from 'react';
+import { AddEditTag } from './components/AddEditTag';
+import { useMediaTypes } from '@/hooks/useMediaTypes';
 
 export default function TagPage() {
   const { loadingTags, tags, deleteTag, editTag, createTag } = useMediaTags();
@@ -31,19 +31,19 @@ export default function TagPage() {
 
   const columns: ColumnDef<Tag>[] = [
     {
-      accessorKey: "name",
-      header: "Name",
+      accessorKey: 'name',
+      header: 'Name',
     },
     {
-      accessorKey: "description",
-      header: "Description",
+      accessorKey: 'description',
+      header: 'Description',
     },
     {
-      accessorKey: "type",
-      header: "Type",
+      accessorKey: 'type',
+      header: 'Type',
     },
     {
-      id: "actions",
+      id: 'actions',
       cell: ({ row }) => {
         const tag = row.original as Tag;
 
@@ -61,7 +61,7 @@ export default function TagPage() {
 
   return (
     <>
-      <div className="py-10 w-full">
+      <div className="w-full py-10">
         <Header
           title="Tag"
           haveButton={true}
