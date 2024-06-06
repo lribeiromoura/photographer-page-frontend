@@ -14,7 +14,6 @@ export const GalleryPhoto = ({
   setIndex,
   index,
 }: GalleryPhotoProps) => {
-  console.log(setIndex);
   const options = {
     zoom: false,
     close: false,
@@ -43,6 +42,7 @@ export const GalleryPhoto = ({
                   height={image.height}
                   onClick={open}
                   loader={() => image.src}
+                  layout="responsive"
                   src={imageUrl}
                 />
               )}

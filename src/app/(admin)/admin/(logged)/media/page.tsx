@@ -67,7 +67,6 @@ export default function MediaPage() {
     {
       id: 'actions',
       cell: ({ row }) => {
-        console.log(row);
         // const mediaType = row.original as Media;
 
         return (
@@ -101,7 +100,7 @@ export default function MediaPage() {
           {
             ...selectedPhoto,
 
-            isPublished: selectedPhoto.isPublished ? 'true' : 'false',
+            isPublished: selectedPhoto.isPublished ? true : false,
           },
           file,
         );
@@ -109,7 +108,6 @@ export default function MediaPage() {
         response = await editMedia(selectedPhoto);
       }
       if (response?.error || response?.ok === false) {
-        console.log(response);
         toast.error(`Error: ${response.message.join(', ')}`);
       } else {
         toast.success(
@@ -136,7 +134,6 @@ export default function MediaPage() {
         type,
       );
       if (response) {
-        console.log(count);
         setCount(response.total);
         setPhotos(response.data);
       }

@@ -33,10 +33,9 @@ export const AddMedia = ({
   const onAddMedia = useCallback(async () => {
     if (file) {
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append('data', file);
       formData.append('name', selectedPhoto.name);
       formData.append('description', selectedPhoto.description);
-      formData.append('url', selectedPhoto.url);
       formData.append('isPublished', selectedPhoto.isPublished.toString());
       formData.append('tags', selectedPhoto.tags);
       formData.append('type', selectedPhoto.type);
@@ -119,9 +118,7 @@ export const AddMedia = ({
                   <input
                     id="1"
                     type="checkbox"
-                    checked={
-                      selectedPhoto.isPublished === 'true' ? true : false
-                    }
+                    checked={selectedPhoto.isPublished ? true : false}
                     onChange={(e) =>
                       setSelectedPhoto({
                         ...selectedPhoto,

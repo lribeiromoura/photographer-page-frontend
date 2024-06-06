@@ -3,9 +3,9 @@ export interface Media {
   name: string;
   description: string;
   filename?: string;
+  file: Buffer | string;
   data?: Buffer | string;
-  url: string;
-  isPublished: boolean | string;
+  isPublished: boolean;
   tags: string;
   type: string;
   __v?: number;

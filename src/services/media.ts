@@ -1,4 +1,5 @@
 import { Media, MediaResponse } from '@/@types/media';
+import { createQueryString } from '@/util/createQueryString';
 
 export const getMedia = async (
   limit: number,
@@ -9,16 +10,23 @@ export const getMedia = async (
   type: string,
 ) => {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/medias?limit=${limit}&page=${page}&isPublished=${isPublished}&searchString=${searchString}&tags=${tags}&type=${type}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
+    const queryParams = createQueryString({
+      limit,
+      page,
+      isPublished,
+      searchString,
+      tags,
+      type,
+    });
+
+    const response = await fetch(`/api/medias?${queryParams}  `, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('access_token')}`,
       },
-    );
+    });
+
     const data: MediaResponse = await response.json();
     return data;
   } catch (error) {
@@ -49,21 +57,22 @@ export const createMedia = async (media: Media, file: File | null) => {
     const formData = new FormData();
     formData.append('name', media.name);
     formData.append('description', media.description);
-    formData.append('url', media.url);
     formData.append('isPublished', media.isPublished ? 'true' : 'false');
-    formData.append('tags', media.tags);
+    formData.append('tags', JSON.stringify(media.tags));
     formData.append('type', media.type);
+
     if (file) {
       formData.append('file', file);
     }
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/medias`, {
+    const response = await fetch(`/api/medias`, {
       method: 'POST',
       headers: {
         authorization: `Bearer ${localStorage.getItem('access_token')}`,
       },
       body: formData,
-    }).then((res) => res.json());
+    });
+
     return response;
   } catch (error) {
     console.error('Error creating photo', error);
