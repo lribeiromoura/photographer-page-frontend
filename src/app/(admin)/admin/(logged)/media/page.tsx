@@ -8,12 +8,20 @@ import { Header } from '../components/Header';
 import { SearchMedia } from './components/SearchMedia';
 import DataTable from './components/MediaTable';
 
-import { createMedia, editMedia, getMedia } from '@/services/media';
+import {
+  createMedia,
+  deleteMedia,
+  editMedia,
+  getMedia,
+} from '@/services/media';
 import { AddMedia } from './components/AddMedia';
 import { ToastContainer, toast } from 'react-toastify';
 
 import { redirect } from 'next/navigation';
 import { ColumnDef } from '@tanstack/react-table';
+import { getAllMediaTagsService } from '@/services/tag';
+import { Tag } from '@/@types/tag';
+import { MediaTypeActions } from '../mediatype/components/AddEditMediaType/components/MediaTypeActions';
 
 export default function MediaPage() {
   const [loading, setLoading] = useState(true);
@@ -25,15 +33,14 @@ export default function MediaPage() {
   const [count, setCount] = useState(0);
   const page = 1;
   const [perPage, setPerPage] = useState(10);
+  const [allTags, setAllTags] = useState<Tag[]>([]);
 
   const [photos, setPhotos] = useState<Media[]>([]);
 
-  // const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [openAddEditModal, setOpenAddEditModal] = useState(false);
+  const [addEditLoading, setAddEditLoading] = useState(false);
 
   const [selectedPhoto, setSelectedPhoto] = useState<Media>({} as Media);
-
-  // const { token } = useLogin();
 
   const columns: ColumnDef<Media>[] = [
     {
@@ -67,35 +74,38 @@ export default function MediaPage() {
     {
       id: 'actions',
       cell: ({ row }) => {
-        // const mediaType = row.original as Media;
+        const media = row.original as Media;
 
         return (
-          // <MediaTypeActions
-          //   onDelete={() => handleDelete()}
-          //   onEdit={(editMediaType) => handleAddEdit()}
-          //   mediaType={mediaType}
-          // />
-          <></>
+          <>
+            <MediaTypeActions
+              onDelete={(media: Media) => handleDelete(media)}
+              onEdit={() => handleEditModal(media)}
+              media={media}
+            />
+          </>
         );
       },
     },
   ];
 
-  // const handleDelete = async () => {
-  //   if (selectedPhoto && selectedPhoto._id) {
-  //     await deleteMedia(selectedPhoto._id);
-  //     setSelectedPhoto({} as Media);
-  //     fetchPhotos();
-  //     console.log(openConfirmModal);
-  //     setOpenConfirmModal(false);
-  //   }
-  // };
+  const handleDelete = async (media: Media) => {
+    if (media && media._id) {
+      await deleteMedia(media._id);
+      fetchPhotos();
+    }
+  };
 
-  const handleAddEdit = async (file: File) => {
+  const handleAddEdit = async (file?: File) => {
     try {
       const type = selectedPhoto._id ? 'edit' : 'add';
       let response;
+      setAddEditLoading(true);
       if (type === 'add') {
+        if (!file) {
+          toast.error('Please select a file');
+          return;
+        }
         response = await createMedia(
           {
             ...selectedPhoto,
@@ -105,7 +115,7 @@ export default function MediaPage() {
           file,
         );
       } else {
-        response = await editMedia(selectedPhoto);
+        response = await editMedia(selectedPhoto, file);
       }
       if (response?.error || response?.ok === false) {
         toast.error(`Error: ${response.message.join(', ')}`);
@@ -119,12 +129,23 @@ export default function MediaPage() {
       }
     } catch (error) {
       console.error('Error adding/editing media', error);
+    } finally {
+      setAddEditLoading(false);
     }
+  };
+
+  const handleEditModal = (media: Media) => {
+    setSelectedPhoto(media);
+    setOpenAddEditModal(true);
   };
 
   const fetchPhotos = async () => {
     setLoading(true);
     try {
+      const getTags = await getAllMediaTagsService();
+      if (getTags) {
+        setAllTags(getTags);
+      }
       const response = await getMedia(
         perPage,
         page,
@@ -159,10 +180,11 @@ export default function MediaPage() {
           <Header
             title="Media"
             haveButton={true}
-            buttonTitle="Add Media"
+            buttonTitle="Cadastar Media"
             buttonCallback={() => setOpenAddEditModal(true)}
           />
           <SearchMedia
+            tags={allTags}
             setSearch={setSearch}
             setPerPage={setPerPage}
             setActive={setActive}
@@ -180,12 +202,15 @@ export default function MediaPage() {
         isOpen={openAddEditModal}
         handleAddMedia={(file) => handleAddEdit(file)}
         handleCancel={() => {
-          setOpenAddEditModal(false);
           setSelectedPhoto({} as Media);
+          setOpenAddEditModal(false);
         }}
         selectedPhoto={selectedPhoto}
         setSelectedPhoto={setSelectedPhoto}
+        editMode={selectedPhoto._id ? true : false}
+        addEditLoading={addEditLoading}
       />
+
       <ToastContainer />
     </>
   );

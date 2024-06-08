@@ -3,8 +3,7 @@ export interface Media {
   name: string;
   description: string;
   filename?: string;
-  file: Buffer | string;
-  data?: Buffer | string;
+  data: Buffer;
   isPublished: boolean;
   tags: string;
   type: string;

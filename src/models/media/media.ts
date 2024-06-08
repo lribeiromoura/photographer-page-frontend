@@ -9,9 +9,9 @@ export const MediaSchema = new Schema<Media>(
       type: String,
       required: false,
     },
-    file: {
+    data: {
       type: Buffer,
-      required: true,
+      required: false,
     },
     isPublished: {
       type: Boolean,

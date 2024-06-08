@@ -12,21 +12,19 @@ import { DialogItem } from '@/app/(admin)/admin/(logged)/components/DialogItem';
 import { AddEditMediaType } from '../..';
 import { DeleteDialog } from '@/app/(admin)/admin/(logged)/components/DeleteDialog';
 import { MediaType } from '@/@types/mediatype';
+import { Media } from '@/@types/media';
 
 interface mediaTypeActionsProps {
-  mediaType: MediaType;
-  onEdit: (mediaType: MediaType) => void;
-  onDelete: (mediaType: MediaType) => void;
+  media: Media;
+  onEdit: () => void;
+  onDelete: (mediaType: Media) => void;
 }
 
 export const MediaTypeActions = ({
-  mediaType,
+  media,
   onEdit,
   onDelete,
 }: mediaTypeActionsProps) => {
-  const handleEditmediaType = (mediaType: MediaType) => {
-    onEdit(mediaType);
-  };
   return (
     <div className="pr-4 text-right">
       <DropdownMenu.Root>
@@ -45,13 +43,9 @@ export const MediaTypeActions = ({
                 <p className="pl-2">Edit</p>
               </div>
             }
+            onOpenChange={() => onEdit()}
           >
-            <AddEditMediaType
-              onConfirm={(mediaTypeEdited) =>
-                handleEditmediaType(mediaTypeEdited)
-              }
-              mediaType={mediaType}
-            />
+            Edit
           </DialogItem>
           <DialogItem
             triggerChildren={
@@ -65,7 +59,7 @@ export const MediaTypeActions = ({
               title="Delete mediaType"
               message="Are you sure you want to delete this media type?"
               buttonTitle="Delete"
-              onConfirm={() => onDelete(mediaType)}
+              onConfirm={() => onDelete(media)}
             />
           </DialogItem>
         </DropdownMenuContent>

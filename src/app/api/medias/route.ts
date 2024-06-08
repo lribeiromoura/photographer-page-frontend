@@ -1,13 +1,8 @@
 import { HttpStatusCode } from 'axios';
+import sharp from 'sharp';
 import connectMongo from '@/lib/mongodb';
 import IMedia from '@/models/media/media';
 import { NextRequest, NextResponse } from 'next/server';
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
 
 export async function POST(req: NextRequest) {
   try {
@@ -30,13 +25,18 @@ export async function POST(req: NextRequest) {
 
     const fileBuffer = await file.arrayBuffer();
 
+    const compressedBuffer = await sharp(Buffer.from(fileBuffer))
+      .resize({ width: 800 })
+      .jpeg({ quality: 80 })
+      .toBuffer();
+
     const mediaData = {
       name,
       description,
       isPublished,
       tags,
       type,
-      data: Buffer.from(fileBuffer),
+      data: compressedBuffer,
     };
 
     const product = await IMedia.create(mediaData);
@@ -160,5 +160,88 @@ export async function GET(req: NextRequest) {
     });
   } catch (error) {
     return NextResponse.json({ error });
+  }
+}
+
+export async function PATCH(req: NextRequest) {
+  try {
+    await connectMongo();
+    const formData = await req.formData();
+    const id = formData.get('_id') as string;
+    const name = formData.get('name') as string;
+    const description = formData.get('description') as string;
+    const isPublished = formData.get('isPublished') === 'true';
+    const tags = JSON.parse(formData.get('tags') as string);
+    const type = formData.get('type') as string;
+    const file = formData.get('file') as File;
+
+    if (!id || !name || !description || !tags || !type) {
+      return NextResponse.json(
+        { message: 'Missing required fields' },
+        { status: HttpStatusCode.BadRequest },
+      );
+    }
+
+    let mediaData: any = {
+      name,
+      description,
+      isPublished,
+      tags,
+      type,
+    };
+
+    if (file) {
+      const fileBuffer = await file.arrayBuffer();
+
+      const compressedBuffer = await sharp(Buffer.from(fileBuffer))
+        .resize({ width: 800 })
+        .jpeg({ quality: 80 })
+        .toBuffer();
+
+      mediaData = {
+        ...mediaData,
+        data: compressedBuffer,
+      };
+    }
+
+    const product = await IMedia.findByIdAndUpdate(id, mediaData, {
+      new: true,
+    });
+
+    return NextResponse.json(
+      { product, message: 'Your media has been updated' },
+      { status: HttpStatusCode.Created },
+    );
+  } catch (error: any) {
+    return NextResponse.json(
+      { message: error.message },
+      { status: HttpStatusCode.BadRequest },
+    );
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  try {
+    await connectMongo();
+    const { searchParams } = await req.nextUrl;
+
+    if (!searchParams.get('id')) {
+      return NextResponse.json(
+        { message: 'Missing required fields' },
+        { status: HttpStatusCode.BadRequest },
+      );
+    }
+
+    await IMedia.findByIdAndDelete(searchParams.get('id'));
+
+    return NextResponse.json(
+      { message: 'Your media has been deleted' },
+      { status: HttpStatusCode.Created },
+    );
+  } catch (error: any) {
+    return NextResponse.json(
+      { message: error.message },
+      { status: HttpStatusCode.BadRequest },
+    );
   }
 }

@@ -42,7 +42,6 @@ export const GalleryPhoto = ({
                   height={image.height}
                   onClick={open}
                   loader={() => image.src}
-                  layout="responsive"
                   src={imageUrl}
                 />
               )}

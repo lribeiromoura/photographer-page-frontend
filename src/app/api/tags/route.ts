@@ -7,8 +7,11 @@ export async function GET() {
     await connectMongo();
     const tag = await ITag.find();
     return NextResponse.json(tag);
-  } catch (error) {
-    return error;
+  } catch (error: any) {
+    return NextResponse.json(
+      { message: error.message || 'An error occurred' },
+      { status: 500 },
+    );
   }
 }
 

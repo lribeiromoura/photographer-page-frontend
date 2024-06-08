@@ -1,7 +1,9 @@
 import { MediaTags, MediaType } from '@/@types/media';
+import { Tag } from '@/@types/tag';
 import { debounce } from '@/util/debounce';
 
 type SearchMediaProps = {
+  tags: Tag[];
   setSearch: (value: string) => void;
   setPerPage: (value: number) => void;
   setActive: (value: string) => void;
@@ -15,12 +17,13 @@ export const SearchMedia = ({
   setActive,
   setType,
   setTags,
+  tags,
 }: SearchMediaProps) => {
   return (
     <>
       <div>
         <div>
-          <span className="text-white">Search</span>
+          <span className="text-white">Título</span>
         </div>
         <div className="relative block">
           <span className="absolute inset-y-0 left-0 flex h-full items-center pl-2">
@@ -49,7 +52,7 @@ export const SearchMedia = ({
           <div className="flex w-full flex-col">
             <label>
               <span className="hidden text-white sm:inline-block">
-                Per Page
+                Qtd por página
               </span>
             </label>
             <div className="relative">
@@ -81,9 +84,9 @@ export const SearchMedia = ({
                 onChange={(e) => setActive(e.target.value)}
                 className="block h-full w-full appearance-none rounded border-b border-r border-t border-gray-400 bg-white px-4 py-2 pr-8 leading-tight text-gray-700 focus:border-l focus:border-r focus:border-gray-500 focus:bg-white focus:outline-none sm:border-r-0"
               >
-                <option value={'all'}>All</option>
-                <option value={'true'}>Active</option>
-                <option value={'false'}>Inactive</option>
+                <option value={'all'}>Tudo</option>
+                <option value={'true'}>Ativo</option>
+                <option value={'false'}>Inativo</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg
@@ -99,7 +102,7 @@ export const SearchMedia = ({
           <div className="flex w-full flex-col">
             <label>
               <span className="hidden text-white sm:inline-block">
-                Media Type
+                Tipo de Media
               </span>
             </label>
             <div className="relative">
@@ -107,7 +110,7 @@ export const SearchMedia = ({
                 onChange={(e) => setType(e.target.value)}
                 className="block h-full w-full appearance-none rounded border-b border-r border-t border-gray-400 bg-white px-4 py-2 pr-8 leading-tight text-gray-700 focus:border-l focus:border-r focus:border-gray-500 focus:bg-white focus:outline-none sm:border-r-0"
               >
-                <option value={'all'}>All</option>
+                <option value={'all'}>Tudo</option>
                 {Object.entries(MediaType).map(([key, value]) => (
                   <option key={key} value={key}>
                     {value}
@@ -128,7 +131,7 @@ export const SearchMedia = ({
           <div className="flex w-full flex-col">
             <label>
               <span className="hidden text-white sm:inline-block">
-                Category
+                Categoria
               </span>
             </label>
             <div className="relative">
@@ -136,10 +139,10 @@ export const SearchMedia = ({
                 onChange={(e) => setTags(e.target.value)}
                 className="block h-full w-full appearance-none rounded border-b border-r border-t border-gray-400 bg-white px-4 py-2 pr-8 leading-tight text-gray-700 focus:border-l focus:border-r focus:border-gray-500 focus:bg-white focus:outline-none sm:border-r-0"
               >
-                <option value="all">All</option>
-                {Object.entries(MediaTags).map(([key, value]) => (
-                  <option key={key} value={key}>
-                    {value}
+                <option value="all">Tudo</option>
+                {tags.map((tag) => (
+                  <option key={tag._id} value={tag.name}>
+                    {tag.name}
                   </option>
                 ))}
               </select>

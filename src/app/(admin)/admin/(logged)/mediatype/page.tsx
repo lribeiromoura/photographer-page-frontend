@@ -44,11 +44,12 @@ export default function MediaTypePage() {
         const mediaType = row.original as MediaType;
 
         return (
-          <MediaTypeActions
-            onDelete={() => handleDeleteMediaType(mediaType)}
-            onEdit={(editMediaType) => handleEditMediaType(editMediaType)}
-            mediaType={mediaType}
-          />
+          <> </>
+          // <MediaTypeActions
+          //   onDelete={() => handleDeleteMediaType(mediaType)}
+          //   onEdit={(editMediaType) => handleEditMediaType(editMediaType)}
+          //   mediaType={mediaType}
+          // />
         );
       },
     },

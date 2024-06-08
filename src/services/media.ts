@@ -36,16 +36,13 @@ export const getMedia = async (
 
 export const deleteMedia = async (id: string) => {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/medias/${id}`,
-      {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
+    const response = await fetch(`/api/medias?id=${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('access_token')}`,
       },
-    );
+    });
     return response;
   } catch (error) {
     console.error('Error deleting photo', error);
@@ -79,19 +76,29 @@ export const createMedia = async (media: Media, file: File | null) => {
   }
 };
 
-export const editMedia = async (media: Media) => {
+export const editMedia = async (media: Media, file?: File | null) => {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/medias/${media._id}`,
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
-        body: JSON.stringify(media),
+    const formData = new FormData();
+    if (media._id) {
+      formData.append('_id', media._id);
+      formData.append('name', media.name);
+      formData.append('description', media.description);
+      formData.append('isPublished', media.isPublished ? 'true' : 'false');
+      formData.append('tags', JSON.stringify(media.tags));
+      formData.append('type', media.type);
+    }
+
+    if (file) {
+      formData.append('file', file);
+    }
+
+    const response = await fetch(`/api/medias?id=${media._id}`, {
+      method: 'PATCH',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('access_token')}`,
       },
-    ).then((res) => res.json());
+      body: formData,
+    }).then((res) => res.json());
     return response;
   } catch (error: any) {
     console.error('Error editing photo', error);
