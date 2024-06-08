@@ -5,7 +5,8 @@ export interface Media {
   filename?: string;
   data: Buffer;
   isPublished: boolean;
-  tags: string;
+  tagId: string;
+  tagName?: string;
   type: string;
   __v?: number;
   createdAt?: string;

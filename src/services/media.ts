@@ -6,7 +6,7 @@ export const getMedia = async (
   page: number,
   isPublished: string,
   searchString: string,
-  tags: string,
+  tagId: string,
   type: string,
 ) => {
   try {
@@ -15,11 +15,11 @@ export const getMedia = async (
       page,
       isPublished,
       searchString,
-      tags,
+      tagId,
       type,
     });
 
-    const response = await fetch(`/api/medias?${queryParams}  `, {
+    const response = await fetch(`/api/medias?${queryParams}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export const createMedia = async (media: Media, file: File | null) => {
     formData.append('name', media.name);
     formData.append('description', media.description);
     formData.append('isPublished', media.isPublished ? 'true' : 'false');
-    formData.append('tags', JSON.stringify(media.tags));
+    formData.append('tagId', media.tagId);
     formData.append('type', media.type);
 
     if (file) {
@@ -84,7 +84,7 @@ export const editMedia = async (media: Media, file?: File | null) => {
       formData.append('name', media.name);
       formData.append('description', media.description);
       formData.append('isPublished', media.isPublished ? 'true' : 'false');
-      formData.append('tags', JSON.stringify(media.tags));
+      formData.append('tagId', media.tagId);
       formData.append('type', media.type);
     }
 

@@ -48,7 +48,7 @@ export const AddMedia = ({
   };
 
   const handleDisable = useCallback(() => {
-    return !selectedPhoto.name || !selectedPhoto.type || !selectedPhoto.tags;
+    return !selectedPhoto.name || !selectedPhoto.type || !selectedPhoto.tagId;
   }, [selectedPhoto]);
 
   const onAddMedia = useCallback(async () => {
@@ -187,18 +187,18 @@ export const AddMedia = ({
                   <select
                     id="1"
                     multiple={false}
-                    value={selectedPhoto.tags || ''}
+                    value={selectedPhoto.tagId || ''}
                     onChange={(e) =>
                       setSelectedPhoto({
                         ...selectedPhoto,
-                        tags: e.target.value,
+                        tagId: e.target.value,
                       })
                     }
                     className="peer h-10 w-full rounded-md bg-gray-50 px-4 outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-purple-400"
                   >
                     <option value={''}>Select Tag</option>
                     {tags.map((tag) => (
-                      <option key={tag.name} value={tag.name} className="">
+                      <option key={tag.name} value={tag._id} className="">
                         {tag.name}
                       </option>
                     ))}

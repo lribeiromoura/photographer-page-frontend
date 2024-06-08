@@ -18,7 +18,7 @@ export function MenuAdmin() {
   const menu = [
     { name: 'MEDIA', path: '/admin/media', enum: 'media' },
     { name: 'TAG', path: '/admin/tag', enum: 'tag' },
-    { name: 'MEDIA TYPE', path: '/admin/mediatype', enum: 'mediatype' },
+    // { name: 'MEDIA TYPE', path: '/admin/mediatype', enum: 'mediatype' },
   ];
 
   const handleSelect = (e: React.MouseEvent<HTMLAnchorElement>) => {

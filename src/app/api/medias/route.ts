@@ -12,11 +12,11 @@ export async function POST(req: NextRequest) {
     const name = formData.get('name') as string;
     const description = formData.get('description') as string;
     const isPublished = formData.get('isPublished') === 'true';
-    const tags = JSON.parse(formData.get('tags') as string);
+    const tagId = formData.get('tagId') as string;
     const type = formData.get('type') as string;
     const file = formData.get('file') as File;
 
-    if (!name || !description || !tags || !type) {
+    if (!name || !description || !tagId || !type) {
       return NextResponse.json(
         { message: 'Missing required fields' },
         { status: HttpStatusCode.BadRequest },
@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
       name,
       description,
       isPublished,
-      tags,
+      tagId,
       type,
       data: compressedBuffer,
     };
@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
 export async function GET(req: NextRequest) {
   const { searchParams } = await req.nextUrl;
   const searchString = searchParams.get('searchString');
-  const tags = searchParams.get('tags');
+  const tagId = searchParams.get('tagId');
   const type = searchParams.get('type');
   const isPublished = searchParams.get('isPublished');
   const limit = searchParams.get('limit');
@@ -91,7 +91,7 @@ export async function GET(req: NextRequest) {
                     },
                   },
                 ],
-                tags: tags === 'all' ? { $exists: true } : tags,
+                tagId: tagId === 'all' ? { $exists: true } : tagId,
                 type: type === 'all' ? { $exists: true } : type,
                 isPublished:
                   isPublished === 'all'
@@ -129,7 +129,7 @@ export async function GET(req: NextRequest) {
                   },
                 ],
                 type: type === 'all' ? { $exists: true } : type,
-                tags: tags === 'all' ? { $exists: true } : tags,
+                tagId: tagId === 'all' ? { $exists: true } : tagId,
                 isPublished:
                   isPublished === 'all'
                     ? { $exists: true }
@@ -171,11 +171,11 @@ export async function PATCH(req: NextRequest) {
     const name = formData.get('name') as string;
     const description = formData.get('description') as string;
     const isPublished = formData.get('isPublished') === 'true';
-    const tags = JSON.parse(formData.get('tags') as string);
+    const tagId = formData.get('tagId') as string;
     const type = formData.get('type') as string;
     const file = formData.get('file') as File;
 
-    if (!id || !name || !description || !tags || !type) {
+    if (!id || !name || !description || !tagId || !type) {
       return NextResponse.json(
         { message: 'Missing required fields' },
         { status: HttpStatusCode.BadRequest },
@@ -186,7 +186,7 @@ export async function PATCH(req: NextRequest) {
       name,
       description,
       isPublished,
-      tags,
+      tagId,
       type,
     };
 

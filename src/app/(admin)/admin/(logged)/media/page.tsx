@@ -52,16 +52,12 @@ export default function MediaPage() {
       header: 'Description',
     },
     {
-      accessorKey: 'filename',
-      header: 'Filename',
-    },
-    {
       accessorKey: 'isPublished',
       header: 'Published',
     },
     {
-      accessorKey: 'tags',
-      header: 'Tags',
+      accessorKey: 'tagName',
+      header: 'Tag',
     },
     {
       accessorKey: 'type',
@@ -109,7 +105,6 @@ export default function MediaPage() {
         response = await createMedia(
           {
             ...selectedPhoto,
-
             isPublished: selectedPhoto.isPublished ? true : false,
           },
           file,
@@ -145,18 +140,24 @@ export default function MediaPage() {
       const getTags = await getAllMediaTagsService();
       if (getTags) {
         setAllTags(getTags);
-      }
-      const response = await getMedia(
-        perPage,
-        page,
-        active,
-        search,
-        tags,
-        type,
-      );
-      if (response) {
-        setCount(response.total);
-        setPhotos(response.data);
+        const response = await getMedia(
+          perPage,
+          page,
+          active,
+          search,
+          tags,
+          type,
+        );
+        if (response) {
+          const parsedPhotos = response.data.map((photo) => {
+            return {
+              ...photo,
+              tagName: getTags.find((tag) => tag._id === photo.tagId)?.name,
+            };
+          });
+          setCount(response.total);
+          setPhotos(parsedPhotos);
+        }
       }
     } catch (error) {
       console.error('Error fetching photos', error);

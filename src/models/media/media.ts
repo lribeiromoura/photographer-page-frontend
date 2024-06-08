@@ -18,7 +18,7 @@ export const MediaSchema = new Schema<Media>(
       default: false,
       required: true,
     },
-    tags: {
+    tagId: {
       type: String,
       required: true,
     },

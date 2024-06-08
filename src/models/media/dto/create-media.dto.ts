@@ -4,6 +4,6 @@ export type CreateMediaDto = {
   filename?: string | null;
   data: Buffer;
   isPublished: boolean;
-  tags: string;
+  tagId: string;
   type: string;
 };

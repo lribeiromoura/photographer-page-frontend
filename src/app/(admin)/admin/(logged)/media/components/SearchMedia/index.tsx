@@ -141,7 +141,7 @@ export const SearchMedia = ({
               >
                 <option value="all">Tudo</option>
                 {tags.map((tag) => (
-                  <option key={tag._id} value={tag.name}>
+                  <option key={tag._id} value={tag._id}>
                     {tag.name}
                   </option>
                 ))}
