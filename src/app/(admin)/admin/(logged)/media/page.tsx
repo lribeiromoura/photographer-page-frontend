@@ -205,7 +205,7 @@ export default function MediaPage() {
     //   return;
     // }
     fetchPhotos();
-  }, [page, perPage, active, tags, search, type, fetchPhotos]);
+  }, [page, perPage, active, tags, search, type]);
 
   return (
     <>
