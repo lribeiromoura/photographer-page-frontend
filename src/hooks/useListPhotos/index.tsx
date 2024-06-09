@@ -18,10 +18,10 @@ export const useListPhotos = (props?: UseListPhotosProps) => {
     const data = await getMedia(10, 1, 'true', '', tag, 'all');
     const parsedData = data?.data.map((image) => ({
       ...image,
-      src: image.url,
-      caption: image.name,
-      width: getImgSize(image.url).width || 1920,
-      height: getImgSize(image.url).height || 1280,
+      src: image.data?.toString(),
+      caption: image.description,
+      width: 1920,
+      height: 1280,
     }));
     if (parsedData && parsedData.length > 0) {
       setImages(parsedData);

@@ -8,12 +8,15 @@ import { ColumnDef } from '@tanstack/react-table';
 import { TagActions } from './components/AddEditTag/components/TagActions';
 import { useState } from 'react';
 import { AddEditTag } from './components/AddEditTag';
-import { useMediaTypes } from '@/hooks/useMediaTypes';
+import { MediaType } from '@/@types/media';
 
 export default function TagPage() {
   const { loadingTags, tags, deleteTag, editTag, createTag } = useMediaTags();
-  const { mediaTypes } = useMediaTypes();
   const [openCreateModal, setOpenCreateModal] = useState(false);
+
+  const mediaTypes = Object.entries(MediaType).map(([key, value]) => ({
+    name: key,
+  }));
 
   const handleEditTag = (tag: Tag) => {
     editTag(tag);

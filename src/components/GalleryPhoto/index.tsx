@@ -14,7 +14,6 @@ export const GalleryPhoto = ({
   setIndex,
   index,
 }: GalleryPhotoProps) => {
-  console.log(setIndex);
   const options = {
     zoom: false,
     close: false,

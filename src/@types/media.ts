@@ -3,16 +3,17 @@ export interface Media {
   name: string;
   description: string;
   filename?: string;
-  data?: Buffer | string;
-  url: string;
-  isPublished: boolean | string;
-  tags: string;
+  data?: Buffer;
+  isPublished: boolean;
+  tagId: string;
+  tagName?: string;
   type: string;
   __v?: number;
   createdAt?: string;
   updatedAt?: string;
   width?: number;
   height?: number;
+  srcVideo?: string;
   src?: string;
   caption?: string;
 }

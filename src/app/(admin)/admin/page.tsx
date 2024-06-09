@@ -4,25 +4,42 @@ import React from 'react';
 import { Login } from './(logged)/components/Login';
 
 import { useLogin } from '@/hooks/useLogin';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 
 export default function Admin() {
-  const {
-    handleLogin,
-    password,
-    setPassword,
-    setUsername,
-    username,
-    isLoginLoading,
-  } = useLogin();
+  const router = useRouter();
+  const [loading, setLoading] = React.useState(false);
+  const [user, setUser] = React.useState({
+    email: '',
+    password: '',
+  });
+
+  const onLogin = async () => {
+    try {
+      setLoading(true);
+      const response = await signIn('credentials', {
+        redirect: false,
+        email: user.email,
+        password: user.password,
+      });
+      console.log(response);
+      router.push('admin/media');
+    } catch (error: any) {
+      console.log('Login failed', error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Login
-      username={username}
-      password={password}
-      isLoading={isLoginLoading}
-      setUsername={setUsername}
-      setPassword={setPassword}
-      handleLogin={handleLogin}
+      user={user}
+      setUsername={(value) => setUser({ ...user, email: value })}
+      setPassword={(value) => setUser({ ...user, password: value })}
+      isLoading={loading}
+      handleLogin={onLogin}
     />
   );
 }

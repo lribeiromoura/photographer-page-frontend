@@ -2,7 +2,7 @@ import { Tag } from '@/@types/tag';
 
 export const getAllMediaTagsService = async () => {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/tags`, {
+    const response = await fetch(`/api/tags`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -17,16 +17,13 @@ export const getAllMediaTagsService = async () => {
 
 export const tagByIdService = async (id: string) => {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/tags/${id}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('access_token')} `,
-        },
+    const response = await fetch(`/api/tags/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('access_token')} `,
       },
-    );
+    });
     const data: Tag = await response.json();
     return data;
   } catch (error) {
@@ -36,7 +33,7 @@ export const tagByIdService = async (id: string) => {
 
 export const createTagService = async (tag: Tag) => {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/tags`, {
+    const response = await fetch(`/api/tags`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -53,17 +50,14 @@ export const createTagService = async (tag: Tag) => {
 
 export const editTagService = async (tag: Tag) => {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/tags/${tag._id}`,
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
-        body: JSON.stringify(tag),
+    const response = await fetch(`/api/tags?id=${tag._id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
       },
-    );
+      body: JSON.stringify(tag),
+    });
     const data: Tag = await response.json();
     return data;
   } catch (error) {
@@ -73,19 +67,20 @@ export const editTagService = async (tag: Tag) => {
 
 export const deleteTagService = async (id: string) => {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/tags/${id}`,
-      {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
+    const response = await fetch(`/api/tags?id=${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
       },
-    );
+    });
+    if (!response.ok) {
+      throw new Error('Failed to delete tag');
+    }
     const data: Tag = await response.json();
     return data;
   } catch (error) {
     console.error('Error deleting tag', error);
+    throw error;
   }
 };
