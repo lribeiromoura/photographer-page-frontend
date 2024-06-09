@@ -1,16 +1,22 @@
-// src/lib/auth-mongodb.ts
-
+/* eslint-disable @typescript-eslint/no-namespace */
 import { MongoClient } from 'mongodb';
 
 declare global {
-  var _mongoClientPromise: Promise<MongoClient>;
+  // Força o TypeScript a entender que esta variável global existe
+  // e que ela tem o tipo Promise<MongoClient>.
+  // Se já estiver declarada em outro lugar, esta declaração será mesclada.
+  namespace NodeJS {
+    interface Global {
+      _mongoClientPromise: Promise<MongoClient>;
+    }
+  }
 }
 
 const uri = process.env.NEXT_PUBLIC_DATABASE_URI;
 
 if (!uri) {
   throw new Error(
-    'Please define the MONGO_URI environment variable inside .env.local',
+    'Please define the NEXT_PUBLIC_DATABASE_URI environment variable inside .env.local',
   );
 }
 

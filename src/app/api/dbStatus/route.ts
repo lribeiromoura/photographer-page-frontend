@@ -1,13 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import connectMongo from '@/lib/mongodb';
 import mongoose from 'mongoose';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { HttpStatusCode } from 'axios';
 import { getToken } from 'next-auth/jwt';
 
 const secret = process.env.NEXTAUTH_SECRET;
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req: NextRequest, res: NextResponse) {
   const token = await getToken({ req, secret, raw: true });
 
   if (!token) {
