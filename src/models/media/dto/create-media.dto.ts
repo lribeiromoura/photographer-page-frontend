@@ -6,4 +6,6 @@ export type CreateMediaDto = {
   isPublished: boolean;
   tagId: string;
   type: string;
+  srcVideo?: string;
+  src?: string;
 };

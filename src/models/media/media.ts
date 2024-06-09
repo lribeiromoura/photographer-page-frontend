@@ -26,6 +26,10 @@ export const MediaSchema = new Schema<Media>(
       type: String,
       required: true,
     },
+    srcVideo: {
+      type: String,
+      required: false,
+    },
   },
   {
     timestamps: true,

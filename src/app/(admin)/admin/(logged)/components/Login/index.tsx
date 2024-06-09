@@ -1,7 +1,12 @@
 'use client';
-interface LoginProps {
-  username: string;
+
+type UserProps = {
+  email: string;
   password: string;
+};
+
+interface LoginProps {
+  user: UserProps;
   isLoading: boolean;
   setUsername: (value: string) => void;
   setPassword: (value: string) => void;
@@ -9,8 +14,7 @@ interface LoginProps {
 }
 
 export const Login = ({
-  username,
-  password,
+  user,
   isLoading,
   setUsername,
   setPassword,
@@ -30,7 +34,7 @@ export const Login = ({
             <div className="mb-4">
               <input
                 onChange={(e) => setUsername(e.target.value)}
-                value={username}
+                value={user.email}
                 type="email"
                 placeholder="Email"
                 className="focus:border-black-600 w-full rounded border p-3 text-black placeholder-gray-400 focus:outline-none"
@@ -39,7 +43,7 @@ export const Login = ({
             <div className="mb-4">
               <input
                 onChange={(e) => setPassword(e.target.value)}
-                value={password}
+                value={user.password}
                 type="password"
                 placeholder="Password"
                 className="focus:border-black-600 w-full rounded border p-3 text-black placeholder-gray-400 focus:outline-none"

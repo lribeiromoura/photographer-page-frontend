@@ -49,7 +49,10 @@ export const deleteMedia = async (id: string) => {
   }
 };
 
-export const createMedia = async (media: Media, file: File | null) => {
+export const createMedia = async (
+  media: Media,
+  file?: File | null | undefined,
+) => {
   try {
     const formData = new FormData();
     formData.append('name', media.name);
@@ -58,8 +61,12 @@ export const createMedia = async (media: Media, file: File | null) => {
     formData.append('tagId', media.tagId);
     formData.append('type', media.type);
 
-    if (file) {
+    if (file && media.type === 'PHOTO') {
+      console.log('file', file);
       formData.append('file', file);
+    }
+    if (media.type === 'VIDEO' && media.srcVideo) {
+      formData.append('srcVideo', media.srcVideo);
     }
 
     const response = await fetch(`/api/medias`, {
@@ -90,6 +97,10 @@ export const editMedia = async (media: Media, file?: File | null) => {
 
     if (file) {
       formData.append('file', file);
+    }
+
+    if (media.type === 'VIDEO' && media.srcVideo) {
+      formData.append('srcVideo', media.srcVideo);
     }
 
     const response = await fetch(`/api/medias?id=${media._id}`, {

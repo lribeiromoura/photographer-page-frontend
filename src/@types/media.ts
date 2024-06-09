@@ -3,7 +3,7 @@ export interface Media {
   name: string;
   description: string;
   filename?: string;
-  data: Buffer;
+  data?: Buffer;
   isPublished: boolean;
   tagId: string;
   tagName?: string;
@@ -13,6 +13,7 @@ export interface Media {
   updatedAt?: string;
   width?: number;
   height?: number;
+  srcVideo?: string;
   src?: string;
   caption?: string;
 }

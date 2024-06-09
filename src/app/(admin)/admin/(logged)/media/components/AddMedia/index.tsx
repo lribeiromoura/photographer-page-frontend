@@ -52,16 +52,20 @@ export const AddMedia = ({
   }, [selectedPhoto]);
 
   const onAddMedia = useCallback(async () => {
-    if (file) {
+    if (file && selectedPhoto.type === 'PHOTO') {
       setSelectedPhoto({
         ...selectedPhoto,
         filename: editMode ? selectedPhoto.filename : file?.name,
       });
       handleAddMedia(file);
+    } else if (selectedPhoto.type === 'VIDEO') {
+      handleAddMedia();
     } else if (editMode) {
       if (selectedPhoto.data) {
         handleAddMedia();
       }
+    } else {
+      handleAddMedia();
     }
   }, [file, selectedPhoto, handleAddMedia]);
 
@@ -126,8 +130,33 @@ export const AddMedia = ({
                   />
                 </div>
               </div>
+              <div className="group relative min-w-72 md:w-80 lg:w-96">
+                <label className="block w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-purple-400">
+                  Tipo
+                </label>
+                <select
+                  id="1"
+                  value={selectedPhoto.type || ''}
+                  disabled={editMode}
+                  onChange={(e) =>
+                    setSelectedPhoto({
+                      ...selectedPhoto,
+                      type: e.target.value,
+                    })
+                  }
+                  className="peer h-10 w-full rounded-md bg-gray-50 px-4 outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-purple-400"
+                >
+                  <option value={''}>Select Type</option>
+                  {Object.entries(MediaType).map(([key, value]) => (
+                    <option key={key} value={key} className="">
+                      {value}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               <div className="mt-3 block gap-4 xl:grid xl:grid-flow-col">
-                {
+                {selectedPhoto.type === 'PHOTO' && (
                   <div className="group relative min-w-72 md:w-80 lg:w-full">
                     <label className="block w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-purple-400">
                       Arquivo
@@ -160,7 +189,28 @@ export const AddMedia = ({
                       />
                     )}
                   </div>
-                }
+                )}
+              </div>
+              <div className="mt-3 block gap-4 xl:grid xl:grid-flow-col">
+                {selectedPhoto.type === 'VIDEO' && (
+                  <div className="group relative min-w-72 md:w-80 lg:w-full">
+                    <label className="block w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-purple-400">
+                      URL Youtube
+                    </label>
+                    <input
+                      id="file"
+                      type="text"
+                      value={selectedPhoto.srcVideo || ''}
+                      onChange={(e) =>
+                        setSelectedPhoto({
+                          ...selectedPhoto,
+                          srcVideo: e.target.value,
+                        })
+                      }
+                      className="peer h-10 w-full rounded-md bg-gray-50 px-4 outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-purple-400"
+                    />
+                  </div>
+                )}
               </div>
               <div className="mt-3 block gap-4 xl:grid xl:grid-flow-col">
                 <div className="group relative min-w-72 md:w-80 lg:w-96">
@@ -180,60 +230,59 @@ export const AddMedia = ({
                     className="focus:bg-purple peer h-10 w-10 rounded-md bg-gray-50 px-4 accent-purple-200 outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:ring-2 focus:ring-purple-400"
                   />
                 </div>
-                <div className="group relative min-w-72 md:w-80 lg:w-96">
-                  <label className="block w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-purple-400">
-                    Tag
-                  </label>
-                  <select
-                    id="1"
-                    multiple={false}
-                    value={selectedPhoto.tagId || ''}
-                    onChange={(e) =>
-                      setSelectedPhoto({
-                        ...selectedPhoto,
-                        tagId: e.target.value,
-                      })
-                    }
-                    className="peer h-10 w-full rounded-md bg-gray-50 px-4 outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-purple-400"
-                  >
-                    <option value={''}>Select Tag</option>
-                    {tags.map((tag) => (
-                      <option key={tag.name} value={tag._id} className="">
-                        {tag.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="group relative min-w-72 md:w-80 lg:w-96">
-                  <label className="block w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-purple-400">
-                    Tipo
-                  </label>
-                  <select
-                    id="1"
-                    value={selectedPhoto.type || ''}
-                    onChange={(e) =>
-                      setSelectedPhoto({
-                        ...selectedPhoto,
-                        type: e.target.value,
-                      })
-                    }
-                    className="peer h-10 w-full rounded-md bg-gray-50 px-4 outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-purple-400"
-                  >
-                    <option value={''}>Select Type</option>
-                    {Object.entries(MediaType).map(([key, value]) => (
-                      <option key={key} value={key} className="">
-                        {value}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                {selectedPhoto.type && (
+                  <div className="group relative min-w-72 md:w-80 lg:w-96">
+                    <label className="block w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-purple-400">
+                      Tag
+                    </label>
+                    <select
+                      id="1"
+                      multiple={false}
+                      value={selectedPhoto.tagId || ''}
+                      onChange={(e) =>
+                        setSelectedPhoto({
+                          ...selectedPhoto,
+                          tagId: e.target.value,
+                        })
+                      }
+                      className="peer h-10 w-full rounded-md bg-gray-50 px-4 outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-purple-400"
+                    >
+                      <option value={''}>Select Tag</option>
+                      {tags.map(
+                        (tag) =>
+                          tag.type === selectedPhoto.type && (
+                            <option key={tag._id} value={tag._id} className="">
+                              {tag.name}
+                            </option>
+                          ),
+                      )}
+                    </select>
+                  </div>
+                )}
               </div>
             </form>
-            <div className="mt-4 text-center md:flex md:justify-end md:text-right">
+            <div className="mt-4 flex flex-col justify-end gap-2 text-center">
+              <button
+                onClick={onCancel}
+                className="rounded-md bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+              >
+                Cancelar
+              </button>
               <button
                 onClick={onAddMedia}
                 disabled={handleDisable()}
-                className="block w-full rounded-lg bg-purple-200 px-4 py-3 text-sm font-semibold text-purple-700 disabled:opacity-50 md:order-2 md:ml-2 md:inline-block md:w-auto md:py-2"
+                className={`rounded-md bg-purple-500 px-4 py-2 text-sm font-medium text-white hover:bg-purple-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 ${
+                  handleDisable() ? 'cursor-not-allowed' : ''
+                }`}
+              >
+                {editMode ? 'Editar' : 'Adicionar'}
+              </button>
+            </div>
+            {/* <div className="relative mt-4 flex flex-col text-center md:flex md:justify-end md:text-right">
+              <button
+                onClick={onAddMedia}
+                disabled={handleDisable()}
+                className="mr-5 block w-full rounded-lg bg-purple-200 px-4 py-3 text-sm font-semibold text-purple-700 disabled:opacity-50 md:order-2 md:ml-2 md:inline-block md:w-auto md:py-2"
               >
                 Adicionar
               </button>
@@ -243,7 +292,7 @@ export const AddMedia = ({
               >
                 Cancelar
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </main>

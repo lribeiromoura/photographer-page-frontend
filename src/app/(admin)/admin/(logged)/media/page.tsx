@@ -1,5 +1,5 @@
 'use client';
-
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 
 import { Media } from '@/@types/media';
@@ -24,6 +24,11 @@ import { Tag } from '@/@types/tag';
 import { MediaTypeActions } from '../mediatype/components/AddEditMediaType/components/MediaTypeActions';
 
 export default function MediaPage() {
+  const [stats, setStats] = useState(null);
+  const [error, setError] = useState('');
+  // const { status } = useSession();
+
+  // console.log(status);
   const [loading, setLoading] = useState(true);
 
   const [active, setActive] = useState<string>('all');
@@ -98,17 +103,28 @@ export default function MediaPage() {
       let response;
       setAddEditLoading(true);
       if (type === 'add') {
-        if (!file) {
-          toast.error('Please select a file');
+        if (!file && selectedPhoto.type === 'PHOTO') {
+          toast.error('Adicione uma foto');
+          return;
+        } else if (selectedPhoto.type === 'VIDEO' && !selectedPhoto.srcVideo) {
+          toast.error('Adicione a url de um vídeo do youtube');
           return;
         }
-        response = await createMedia(
-          {
+        if (selectedPhoto.type === 'VIDEO' && selectedPhoto.srcVideo) {
+          response = await createMedia({
             ...selectedPhoto,
             isPublished: selectedPhoto.isPublished ? true : false,
-          },
-          file,
-        );
+          });
+        }
+        if (file && selectedPhoto.type === 'PHOTO') {
+          response = await createMedia(
+            {
+              ...selectedPhoto,
+              isPublished: selectedPhoto.isPublished ? true : false,
+            },
+            file,
+          );
+        }
       } else {
         response = await editMedia(selectedPhoto, file);
       }
@@ -167,10 +183,27 @@ export default function MediaPage() {
   };
 
   useEffect(() => {
-    if (localStorage.getItem('access_token') === null) {
-      redirect('/admin');
-      return;
-    }
+    const fetchStats = async () => {
+      try {
+        const response = await fetch('/api/dbStatus');
+        if (!response.ok) {
+          throw new Error('Failed to fetch stats');
+        }
+        const data = await response.json();
+        setStats(data);
+      } catch (error: any) {
+        setError(error.message);
+      }
+    };
+
+    fetchStats();
+  }, []);
+
+  useEffect(() => {
+    // if (localStorage.getItem('access_token') === null) {
+    //   redirect('/admin');
+    //   return;
+    // }
     fetchPhotos();
   }, [page, perPage, active, tags, search, type]);
 

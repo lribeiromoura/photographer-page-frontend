@@ -3,8 +3,19 @@ import sharp from 'sharp';
 import connectMongo from '@/lib/mongodb';
 import IMedia from '@/models/media/media';
 import { NextRequest, NextResponse } from 'next/server';
+import { getToken } from 'next-auth/jwt';
+
+const secret = process.env.NEXTAUTH_SECRET;
 
 export async function POST(req: NextRequest) {
+  const token = await getToken({ req, secret, raw: true });
+
+  if (!token) {
+    return NextResponse.json(
+      { message: 'You are not authorized to access this resource' },
+      { status: HttpStatusCode.Unauthorized },
+    );
+  }
   try {
     await connectMongo();
     const formData = await req.formData();
@@ -15,6 +26,7 @@ export async function POST(req: NextRequest) {
     const tagId = formData.get('tagId') as string;
     const type = formData.get('type') as string;
     const file = formData.get('file') as File;
+    const srcVideo = formData.get('srcVideo') as string;
 
     if (!name || !description || !tagId || !type) {
       return NextResponse.json(
@@ -23,21 +35,27 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const fileBuffer = await file.arrayBuffer();
-
-    const compressedBuffer = await sharp(Buffer.from(fileBuffer))
-      .resize({ width: 800 })
-      .jpeg({ quality: 80 })
-      .toBuffer();
-
-    const mediaData = {
+    let mediaData: any = {
       name,
       description,
       isPublished,
       tagId,
       type,
-      data: compressedBuffer,
+      srcVideo,
     };
+
+    if (file) {
+      const fileBuffer = await file.arrayBuffer();
+
+      const compressedBuffer = await sharp(Buffer.from(fileBuffer))
+        .resize({ width: 800 })
+        .jpeg({ quality: 80 })
+        .toBuffer();
+      mediaData = {
+        ...mediaData,
+        data: compressedBuffer,
+      };
+    }
 
     const product = await IMedia.create(mediaData);
 
@@ -54,6 +72,15 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
+  console.log(secret);
+  const token = await getToken({ req, secret, raw: true });
+  console.log(token);
+  if (!token) {
+    return NextResponse.json(
+      { message: 'You are not authorized to access this resource' },
+      { status: HttpStatusCode.Unauthorized },
+    );
+  }
   const { searchParams } = await req.nextUrl;
   const searchString = searchParams.get('searchString');
   const tagId = searchParams.get('tagId');
@@ -174,6 +201,7 @@ export async function PATCH(req: NextRequest) {
     const tagId = formData.get('tagId') as string;
     const type = formData.get('type') as string;
     const file = formData.get('file') as File;
+    const srcVideo = formData.get('srcVideo') as string;
 
     if (!id || !name || !description || !tagId || !type) {
       return NextResponse.json(
@@ -188,6 +216,7 @@ export async function PATCH(req: NextRequest) {
       isPublished,
       tagId,
       type,
+      srcVideo,
     };
 
     if (file) {
