@@ -26,9 +26,6 @@ import { MediaTypeActions } from '../mediatype/components/AddEditMediaType/compo
 export default function MediaPage() {
   const [stats, setStats] = useState(null);
   const [error, setError] = useState('');
-  // const { status } = useSession();
-
-  // console.log(status);
   const [loading, setLoading] = useState(true);
 
   const [active, setActive] = useState<string>('all');
@@ -200,10 +197,6 @@ export default function MediaPage() {
   }, []);
 
   useEffect(() => {
-    // if (localStorage.getItem('access_token') === null) {
-    //   redirect('/admin');
-    //   return;
-    // }
     fetchPhotos();
   }, [page, perPage, active, tags, search, type]);
 

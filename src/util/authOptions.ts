@@ -17,7 +17,7 @@ export const authOptions: AuthOptions = {
       },
       authorize: async (credentials) => {
         if (!credentials) {
-          console.log('Missing credentials');
+          console.warn('No credentials provided');
           return null;
         }
 
@@ -26,7 +26,7 @@ export const authOptions: AuthOptions = {
         const user = await User.findOne({ email: credentials.email });
 
         if (!user) {
-          console.log('User not found');
+          console.warn('User not found');
           return null;
         }
 
@@ -36,7 +36,7 @@ export const authOptions: AuthOptions = {
         );
 
         if (!isPasswordValid) {
-          console.log('Invalid password');
+          console.warn('Invalid password');
           return null;
         }
 

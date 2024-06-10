@@ -14,7 +14,7 @@ export const useLogin = () => {
     setIsLoginLoading(true);
     const response = await login(username, password);
     if (response.status === 401) {
-      console.log('Invalid credentials');
+      throw new Error('Invalid credentials');
       return;
     }
     localStorage.setItem('access_token', response);

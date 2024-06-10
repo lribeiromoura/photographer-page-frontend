@@ -113,11 +113,13 @@ export const GalleryPhoto = ({
                     imageRefs.current[i] = el;
                   }}
                   width={
-                    image.width && image.width > 700 ? 700 : image.width || 300
+                    image.width && image.width > 1000
+                      ? 1000
+                      : image.width || 300
                   }
                   height={
-                    image.height && image.height > 700
-                      ? 700
+                    image.height && image.height > 1000
+                      ? 1000
                       : image.height || 300
                   }
                   loader={() => imageUrl}

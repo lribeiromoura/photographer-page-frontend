@@ -22,7 +22,7 @@ export const useProfile = () => {
       }
       return response;
     } catch (error) {
-      console.log('error', error);
+      throw new Error('Failed to fetch profile');
     } finally {
       setLoadingProfile(false);
     }
@@ -38,7 +38,7 @@ export const useProfile = () => {
       }
       return response;
     } catch (error) {
-      console.log('error', error);
+      throw new Error('Failed to fetch profile');
     } finally {
       setLoadingProfile(false);
     }
@@ -54,7 +54,7 @@ export const useProfile = () => {
       }
       return response;
     } catch (error) {
-      console.log('error', error);
+      throw new Error('Failed to fetch profile');
     } finally {
       setLoadingProfile(false);
     }
@@ -70,7 +70,7 @@ export const useProfile = () => {
       }
       return response;
     } catch (error) {
-      console.log('error', error);
+      throw new Error('Failed to fetch profile');
     } finally {
       setLoadingProfile(false);
     }
@@ -86,7 +86,7 @@ export const useProfile = () => {
       }
       return response;
     } catch (error) {
-      console.log('error', error);
+      throw new Error('Failed to fetch profile');
     } finally {
       setLoadingProfile(false);
     }

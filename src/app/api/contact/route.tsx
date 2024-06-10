@@ -35,7 +35,6 @@ export async function POST(req: NextRequest) {
       subject: `New contact from ${name}`,
       html: `<h1>Name: ${name}</h1><h1>From ${emailFrom}</h1><p>${message}</p>`,
     });
-    console.log(email);
     return NextResponse.json({ message: 'Email sent' }, { status: 200 });
   } catch (error) {
     console.error(error);

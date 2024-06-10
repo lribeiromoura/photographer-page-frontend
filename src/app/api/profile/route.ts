@@ -10,7 +10,7 @@ const secret = process.env.NEXTAUTH_SECRET;
 export async function GET() {
   try {
     await connectMongo();
-    const profile = await IProfile.findOne().sort({ createdAt: -1 });
+    const profile = await IProfile.find();
     return NextResponse.json(profile);
   } catch (error: any) {
     return NextResponse.json(

@@ -4,5 +4,6 @@ export interface Profile {
   description: string;
   data?: Buffer;
   isPublished: boolean;
+  preview?: string;
   __v?: 0;
 }

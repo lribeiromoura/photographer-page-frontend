@@ -123,7 +123,6 @@ export default function ProfilePage() {
       }
 
       const profileArr = Array.isArray(response) ? response : [response];
-      console.log(profileArr);
       setProfile(profileArr);
     } catch (error) {
       console.error(error);

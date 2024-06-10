@@ -17,7 +17,7 @@ export function MenuAdmin() {
   const menu = [
     { name: 'MEDIA', path: '/admin/media', enum: 'media' },
     { name: 'TAG', path: '/admin/tag', enum: 'tag' },
-    { name: 'PROFILE', path: '/admin/profile', enum: 'profile' },
+    { name: 'PERFIL', path: '/admin/profile', enum: 'profile' },
     // { name: 'MEDIA TYPE', path: '/admin/mediatype', enum: 'mediatype' },
   ];
 
