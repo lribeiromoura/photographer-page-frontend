@@ -105,8 +105,8 @@ export default function DataTable<TData, TValue>({
             <TableRow>
               <TableCell colSpan={7}>
                 <NotFound
-                  title="Medias não encontradas"
-                  subtitle="Utilize o botão cadastrar media para adicionar nova media."
+                  title="Perfil não encontrado"
+                  subtitle="Utilize o botão cadastrar para adicionar um novo perfil."
                 />
               </TableCell>
             </TableRow>

@@ -82,6 +82,9 @@ export const deleteProfileService = async (id: string) => {
         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
       },
     });
+    if (response.status === 404 || response.status === 401) {
+      throw new Error('Failed to delete profile');
+    }
     if (!response.ok) {
       throw new Error('Failed to delete profile');
     }

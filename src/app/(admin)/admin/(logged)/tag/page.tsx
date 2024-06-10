@@ -81,7 +81,13 @@ export default function TagPage() {
           }
         />
         <section className="pt-4">
-          <DataTable columns={columns} data={tags} loading={loadingTags} />
+          <DataTable
+            columns={columns}
+            data={tags}
+            loading={loadingTags}
+            titleNotFound={'Perfil não encontrado'}
+            subtitleNotFound="Utilize o botão cadastrar para adicionar um novo perfil."
+          />
         </section>
       </div>
     </>

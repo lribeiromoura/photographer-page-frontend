@@ -9,8 +9,7 @@ const secret = process.env.NEXTAUTH_SECRET;
 
 export async function POST(req: NextRequest) {
   const token = await getToken({ req, secret, raw: true });
-
-  if (!token) {
+  if (!token || token === 'null') {
     return NextResponse.json(
       { message: 'You are not authorized to access this resource' },
       { status: HttpStatusCode.Unauthorized },
@@ -72,15 +71,6 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-  console.log(secret);
-  const token = await getToken({ req, secret, raw: true });
-  console.log(token);
-  if (!token) {
-    return NextResponse.json(
-      { message: 'You are not authorized to access this resource' },
-      { status: HttpStatusCode.Unauthorized },
-    );
-  }
   const { searchParams } = await req.nextUrl;
   const searchString = searchParams.get('searchString');
   const tagId = searchParams.get('tagId');
@@ -191,6 +181,14 @@ export async function GET(req: NextRequest) {
 }
 
 export async function PATCH(req: NextRequest) {
+  const token = await getToken({ req, secret, raw: true });
+  if (!token || token === 'null') {
+    return NextResponse.json(
+      { message: 'You are not authorized to access this resource' },
+      { status: HttpStatusCode.Unauthorized },
+    );
+  }
+
   try {
     await connectMongo();
     const formData = await req.formData();
@@ -250,6 +248,13 @@ export async function PATCH(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
+  const token = await getToken({ req, secret, raw: true });
+  if (!token || token === 'null') {
+    return NextResponse.json(
+      { message: 'You are not authorized to access this resource' },
+      { status: HttpStatusCode.Unauthorized },
+    );
+  }
   try {
     await connectMongo();
     const { searchParams } = await req.nextUrl;

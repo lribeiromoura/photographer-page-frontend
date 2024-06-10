@@ -22,14 +22,15 @@ import { ColumnDef } from '@tanstack/react-table';
 import { MediaTypeActions } from '../mediatype/components/AddEditMediaType/components/MediaTypeActions';
 import {
   createProfileService,
+  deleteProfileService,
   editProfileService,
   getAllProfileService,
 } from '@/services/profile';
 import { Profile } from '@/@types/profile';
+import { Actions } from './components/Actions';
+import { set } from 'mongoose';
 
-export default function MediaPage() {
-  const [stats, setStats] = useState(null);
-  const [error, setError] = useState('');
+export default function ProfilePage() {
   const [loading, setLoading] = useState(false);
 
   const [profile, setProfile] = useState<Profile[]>([]);
@@ -59,22 +60,31 @@ export default function MediaPage() {
       cell: ({ row }) => {
         const media = row.original as Profile;
 
-        return <></>;
+        return (
+          <>
+            <Actions profile={media} onDelete={handleDelete} />
+          </>
+        );
       },
     },
   ];
 
-  const handleDelete = async (media: Profile) => {
-    if (media && media._id) {
-      await deleteMedia(media._id);
-      fetchProfile();
+  const handleDelete = async (profile: Profile) => {
+    if (profile && profile._id) {
+      try {
+        setLoading(true);
+        const res = await deleteProfileService(profile._id);
+        if (!res) {
+          throw new Error('Failed to delete profile');
+        }
+        fetchProfile();
+      } catch (error) {
+        toast.error('Error deleting profile');
+      } finally {
+        setLoading(false);
+      }
     }
   };
-
-  // const handleEditModal = (media: Media) => {
-  //   setSelectedProfile(media);
-  //   setOpenAddEditModal(true);
-  // };
 
   const handleAddEdit = async (file?: File) => {
     try {
@@ -108,9 +118,12 @@ export default function MediaPage() {
     try {
       const response = await getAllProfileService();
       if (!response) {
+        setProfile([]);
         throw new Error('Failed to fetch profile');
       }
+
       const profileArr = Array.isArray(response) ? response : [response];
+      console.log(profileArr);
       setProfile(profileArr);
     } catch (error) {
       console.error(error);
@@ -130,6 +143,7 @@ export default function MediaPage() {
             haveButton={true}
             buttonTitle="Cadastar Profile"
             buttonCallback={() => setOpenAddEditModal(true)}
+            isButtonDisabled={loading || profile.length > 0}
           />
           {
             <div className="mt-4">
@@ -149,6 +163,7 @@ export default function MediaPage() {
         setSelectedProfile={setSelectedProfile}
         editMode={selectedProfile._id ? true : false}
         addEditLoading={addEditLoading}
+        isDisabled={addEditLoading}
       />
 
       <ToastContainer />

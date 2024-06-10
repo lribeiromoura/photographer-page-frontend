@@ -1,6 +1,10 @@
 import connectMongo from '@/lib/mongodb';
 import ITag from '@/models/tag/tag';
+import { HttpStatusCode } from 'axios';
+import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
+
+const secret = process.env.NEXTAUTH_SECRET;
 
 export async function GET() {
   try {
@@ -16,6 +20,13 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const token = await getToken({ req, secret, raw: true });
+  if (!token || token === 'null') {
+    return NextResponse.json(
+      { message: 'You are not authorized to access this resource' },
+      { status: HttpStatusCode.Unauthorized },
+    );
+  }
   try {
     await connectMongo();
     const body = await req.json();
@@ -33,6 +44,13 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
+  const token = await getToken({ req, secret, raw: true });
+  if (!token || token === 'null') {
+    return NextResponse.json(
+      { message: 'You are not authorized to access this resource' },
+      { status: HttpStatusCode.Unauthorized },
+    );
+  }
   await connectMongo();
   const { searchParams } = req.nextUrl;
   const id = searchParams.get('id');
@@ -60,6 +78,13 @@ export async function DELETE(req: NextRequest) {
 }
 
 export async function PATCH(req: NextRequest) {
+  const token = await getToken({ req, secret, raw: true });
+  if (!token || token === 'null') {
+    return NextResponse.json(
+      { message: 'You are not authorized to access this resource' },
+      { status: HttpStatusCode.Unauthorized },
+    );
+  }
   await connectMongo();
   const { searchParams } = req.nextUrl;
   const id = searchParams.get('id');

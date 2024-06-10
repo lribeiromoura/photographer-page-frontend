@@ -11,6 +11,7 @@ type AddProfileProps = {
   selectedProfile: Profile;
   editMode?: boolean;
   addEditLoading: boolean;
+  isDisabled?: boolean;
 };
 
 export const AddProfile = ({

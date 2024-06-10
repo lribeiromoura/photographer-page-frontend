@@ -4,6 +4,7 @@ import { HttpStatusCode } from 'axios';
 import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
 import sharp from 'sharp';
+
 const secret = process.env.NEXTAUTH_SECRET;
 
 export async function GET() {
@@ -21,8 +22,7 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   const token = await getToken({ req, secret, raw: true });
-
-  if (!token) {
+  if (!token || token === 'null') {
     return NextResponse.json(
       { message: 'You are not authorized to access this resource' },
       { status: HttpStatusCode.Unauthorized },
@@ -78,6 +78,13 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
+  const token = await getToken({ req, secret, raw: true });
+  if (!token || token === 'null') {
+    return NextResponse.json(
+      { message: 'You are not authorized to access this resource' },
+      { status: HttpStatusCode.Unauthorized },
+    );
+  }
   await connectMongo();
   const { searchParams } = req.nextUrl;
   const id = searchParams.get('id');
@@ -90,10 +97,13 @@ export async function DELETE(req: NextRequest) {
     }
     const tag = await IProfile.findByIdAndDelete(id);
     if (!tag) {
-      return NextResponse.json({ message: 'Tag not found' }, { status: 404 });
+      return NextResponse.json(
+        { message: 'Profile not found' },
+        { status: 404 },
+      );
     }
     return NextResponse.json(
-      { tag, message: 'Tag deleted successfully' },
+      { tag, message: 'Profile deleted successfully' },
       { status: 200 },
     );
   } catch (error: any) {
@@ -105,6 +115,13 @@ export async function DELETE(req: NextRequest) {
 }
 
 export async function PATCH(req: NextRequest) {
+  const token = await getToken({ req, secret, raw: true });
+  if (!token || token === 'null') {
+    return NextResponse.json(
+      { message: 'You are not authorized to access this resource' },
+      { status: HttpStatusCode.Unauthorized },
+    );
+  }
   await connectMongo();
   const { searchParams } = req.nextUrl;
   const id = searchParams.get('id');
@@ -122,7 +139,7 @@ export async function PATCH(req: NextRequest) {
     }
 
     return NextResponse.json(
-      { tag, message: 'Tag updated successfully' },
+      { tag, message: 'Profile updated successfully' },
       { status: 200 },
     );
   } catch (error: any) {
