@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 
 type HeaderProps = {
   title: string;
@@ -7,6 +7,7 @@ type HeaderProps = {
   isButtonModal?: boolean;
   openModal?: boolean;
   modalContent?: React.ReactNode;
+  isButtonDisabled?: boolean;
   setOpenModal?: (open: boolean) => void;
   buttonCallback: () => void;
 };
@@ -18,6 +19,7 @@ export const Header = ({
   isButtonModal,
   openModal,
   modalContent,
+  isButtonDisabled,
   setOpenModal,
   buttonCallback,
 }: HeaderProps) => {
@@ -28,14 +30,15 @@ export const Header = ({
   };
   return (
     <div className="flex justify-between">
-      <h2 className="text-2xl font-semibold leading-tight text-wh text-white">
+      <h2 className="text-wh text-2xl font-semibold leading-tight text-white">
         {title}
       </h2>
       {haveButton && !isButtonModal && (
         <div className="flex">
           <button
-            className=" bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+            className="rounded bg-purple-500 px-4 py-2 font-bold text-white hover:bg-purple-700 disabled:opacity-50"
             onClick={() => buttonCallback()}
+            disabled={isButtonDisabled}
           >
             {buttonTitle}
           </button>
@@ -46,7 +49,7 @@ export const Header = ({
           <DialogTrigger
             onClick={handleOpenModal}
             data-state={!openModal}
-            className=" bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+            className="rounded bg-purple-500 px-4 py-2 font-bold text-white hover:bg-purple-700"
           >
             {buttonTitle}
           </DialogTrigger>

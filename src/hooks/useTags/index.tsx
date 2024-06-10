@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import { Tag } from "@/@types/tag";
+import { useEffect, useState } from 'react';
+import { Tag } from '@/@types/tag';
 import {
   getAllMediaTagsService,
   createTagService,
   deleteTagService,
   editTagService,
   tagByIdService,
-} from "@/services/tag";
+} from '@/services/tag';
 
 export const useMediaTags = () => {
   const [tags, setTags] = useState<Tag[]>([]);
@@ -22,7 +22,7 @@ export const useMediaTags = () => {
       }
       return response;
     } catch (error) {
-      console.log("error", error);
+      throw new Error('Failed to fetch tags');
     } finally {
       setLoadingTags(false);
     }
@@ -38,7 +38,7 @@ export const useMediaTags = () => {
       }
       return response;
     } catch (error) {
-      console.log("error", error);
+      throw new Error('Failed to fetch tags');
     } finally {
       setLoadingTags(false);
     }
@@ -54,7 +54,7 @@ export const useMediaTags = () => {
       }
       return response;
     } catch (error) {
-      console.log("error", error);
+      throw new Error('Failed to fetch tags');
     } finally {
       setLoadingTags(false);
     }
@@ -70,7 +70,7 @@ export const useMediaTags = () => {
       }
       return response;
     } catch (error) {
-      console.log("error", error);
+      throw new Error('Failed to fetch tags');
     } finally {
       setLoadingTags(false);
     }
@@ -86,7 +86,7 @@ export const useMediaTags = () => {
       }
       return response;
     } catch (error) {
-      console.log("error", error);
+      throw new Error('Failed to fetch tags');
     } finally {
       setLoadingTags(false);
     }

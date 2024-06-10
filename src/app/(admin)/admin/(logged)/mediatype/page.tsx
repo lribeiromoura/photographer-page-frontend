@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useMediaTypes } from "@/hooks/useMediaTypes";
-import DataTable from "../components/DataTable";
-import { Header } from "../components/Header";
-import { MediaType } from "@/@types/mediatype";
-import { ColumnDef } from "@tanstack/react-table";
-import { MediaTypeActions } from "./components/AddEditMediaType/components/MediaTypeActions";
-import { useState } from "react";
-import { AddEditMediaType } from "./components/AddEditMediaType";
+import { useMediaTypes } from '@/hooks/useMediaTypes';
+import DataTable from '../components/DataTable';
+import { Header } from '../components/Header';
+import { MediaType } from '@/@types/mediatype';
+import { ColumnDef } from '@tanstack/react-table';
+import { MediaTypeActions } from './components/AddEditMediaType/components/MediaTypeActions';
+import { useState } from 'react';
+import { AddEditMediaType } from './components/AddEditMediaType';
 
 export default function MediaTypePage() {
   const {
@@ -35,20 +35,21 @@ export default function MediaTypePage() {
 
   const columns: ColumnDef<MediaType>[] = [
     {
-      accessorKey: "name",
-      header: "Name",
+      accessorKey: 'name',
+      header: 'Name',
     },
     {
-      id: "actions",
+      id: 'actions',
       cell: ({ row }) => {
         const mediaType = row.original as MediaType;
 
         return (
-          <MediaTypeActions
-            onDelete={() => handleDeleteMediaType(mediaType)}
-            onEdit={(editMediaType) => handleEditMediaType(editMediaType)}
-            mediaType={mediaType}
-          />
+          <> </>
+          // <MediaTypeActions
+          //   onDelete={() => handleDeleteMediaType(mediaType)}
+          //   onEdit={(editMediaType) => handleEditMediaType(editMediaType)}
+          //   mediaType={mediaType}
+          // />
         );
       },
     },
@@ -56,7 +57,7 @@ export default function MediaTypePage() {
 
   return (
     <>
-      <div className="py-10 w-full">
+      <div className="w-full py-10">
         <Header
           title="Media Type"
           haveButton={true}

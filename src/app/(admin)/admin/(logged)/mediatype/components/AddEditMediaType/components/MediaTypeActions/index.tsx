@@ -1,34 +1,30 @@
-import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import {
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 
-import { Button } from "@/components/ui/button";
-import { MoreHorizontal, CircleX, SquarePen } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import { MoreHorizontal, CircleX, SquarePen } from 'lucide-react';
 
-import { DialogItem } from "@/app/(admin)/admin/(logged)/components/DialogItem";
-import { AddEditMediaType } from "../..";
-import { DeleteDialog } from "@/app/(admin)/admin/(logged)/components/DeleteDialog";
-import { MediaType } from "@/@types/mediatype";
+import { DialogItem } from '@/app/(admin)/admin/(logged)/components/DialogItem';
+import { DeleteDialog } from '@/app/(admin)/admin/(logged)/components/DeleteDialog';
+import { Media } from '@/@types/media';
 
 interface mediaTypeActionsProps {
-  mediaType: MediaType;
-  onEdit: (mediaType: MediaType) => void;
-  onDelete: (mediaType: MediaType) => void;
+  media: Media;
+  onEdit: () => void;
+  onDelete: (mediaType: Media) => void;
 }
 
 export const MediaTypeActions = ({
-  mediaType,
+  media,
   onEdit,
   onDelete,
 }: mediaTypeActionsProps) => {
-  const handleEditmediaType = (mediaType: MediaType) => {
-    onEdit(mediaType);
-  };
   return (
-    <div className="text-right pr-4">
+    <div className="pr-4 text-right">
       <DropdownMenu.Root>
         <DropdownMenuTrigger asChild>
           <Button variant="secondary" className="h-8 w-8 p-0 align-middle">
@@ -40,22 +36,18 @@ export const MediaTypeActions = ({
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DialogItem
             triggerChildren={
-              <div className="flex items-center my-2">
+              <div className="my-2 flex items-center">
                 <SquarePen />
-                <p className="pl-2 ">Edit</p>
+                <p className="pl-2">Edit</p>
               </div>
             }
+            onOpenChange={() => onEdit()}
           >
-            <AddEditMediaType
-              onConfirm={(mediaTypeEdited) =>
-                handleEditmediaType(mediaTypeEdited)
-              }
-              mediaType={mediaType}
-            />
+            Edit
           </DialogItem>
           <DialogItem
             triggerChildren={
-              <div className="flex items-center my-2">
+              <div className="my-2 flex items-center">
                 <CircleX color="red" />
                 <p className="pl-2">Delete</p>
               </div>
@@ -65,7 +57,7 @@ export const MediaTypeActions = ({
               title="Delete mediaType"
               message="Are you sure you want to delete this media type?"
               buttonTitle="Delete"
-              onConfirm={() => onDelete(mediaType)}
+              onConfirm={() => onDelete(media)}
             />
           </DialogItem>
         </DropdownMenuContent>

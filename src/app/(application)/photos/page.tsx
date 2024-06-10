@@ -1,7 +1,7 @@
-"use client";
-import "photoswipe/dist/photoswipe.css";
-import { GalleryPhoto } from "@/components/GalleryPhoto";
-import { useListPhotos } from "@/hooks/useListPhotos";
+'use client';
+import 'photoswipe/dist/photoswipe.css';
+import { GalleryPhoto } from '@/components/GalleryPhoto';
+import { useListPhotos } from '@/hooks/useListPhotos';
 
 export default function PhotoPage() {
   const { images, setIndex, index } = useListPhotos({
