@@ -59,16 +59,7 @@ export default function MediaPage() {
       cell: ({ row }) => {
         const media = row.original as Profile;
 
-        return (
-          <>
-            {/* <MediaTypeActions
-
-              onDelete={(media: Profile) => handleDelete(media)}
-              onEdit={() => handleEditModal(media)}
-              media={media}
-            /> */}
-          </>
-        );
+        return <></>;
       },
     },
   ];

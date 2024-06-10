@@ -9,9 +9,7 @@ import { Button } from '@/components/ui/button';
 import { MoreHorizontal, CircleX, SquarePen } from 'lucide-react';
 
 import { DialogItem } from '@/app/(admin)/admin/(logged)/components/DialogItem';
-import { AddEditMediaType } from '../..';
 import { DeleteDialog } from '@/app/(admin)/admin/(logged)/components/DeleteDialog';
-import { MediaType } from '@/@types/mediatype';
 import { Media } from '@/@types/media';
 
 interface mediaTypeActionsProps {
