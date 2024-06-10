@@ -9,8 +9,7 @@ const secret = process.env.NEXTAUTH_SECRET;
 
 export async function GET(req: NextRequest, res: NextResponse) {
   const token = await getToken({ req, secret, raw: true });
-
-  if (!token) {
+  if (!token || token === 'null') {
     return NextResponse.json(
       { message: 'You are not authorized to access this resource' },
       { status: HttpStatusCode.Unauthorized },

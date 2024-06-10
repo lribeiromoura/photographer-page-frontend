@@ -6,23 +6,18 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 import { Button } from '@/components/ui/button';
-import { MoreHorizontal, CircleX, SquarePen } from 'lucide-react';
+import { MoreHorizontal, CircleX } from 'lucide-react';
 
 import { DialogItem } from '@/app/(admin)/admin/(logged)/components/DialogItem';
 import { DeleteDialog } from '@/app/(admin)/admin/(logged)/components/DeleteDialog';
-import { Media } from '@/@types/media';
+import { Profile } from '@/@types/profile';
 
-interface mediaTypeActionsProps {
-  media: Media;
-  onEdit: () => void;
-  onDelete: (mediaType: Media) => void;
+interface ActionsProps {
+  profile: Profile;
+  onDelete: (profile: Profile) => void;
 }
 
-export const MediaTypeActions = ({
-  media,
-  onEdit,
-  onDelete,
-}: mediaTypeActionsProps) => {
+export const Actions = ({ profile, onDelete }: ActionsProps) => {
   return (
     <div className="pr-4 text-right">
       <DropdownMenu.Root>
@@ -37,27 +32,16 @@ export const MediaTypeActions = ({
           <DialogItem
             triggerChildren={
               <div className="my-2 flex items-center">
-                <SquarePen />
-                <p className="pl-2">Edit</p>
-              </div>
-            }
-            onOpenChange={() => onEdit()}
-          >
-            Edit
-          </DialogItem>
-          <DialogItem
-            triggerChildren={
-              <div className="my-2 flex items-center">
                 <CircleX color="red" />
                 <p className="pl-2">Delete</p>
               </div>
             }
           >
             <DeleteDialog
-              title="Delete mediaType"
-              message="Are you sure you want to delete this media type?"
-              buttonTitle="Delete"
-              onConfirm={() => onDelete(media)}
+              title="Excluir perfil?"
+              message="Você tem certeza que deseja excluir este perfil?"
+              buttonTitle="Excluir"
+              onConfirm={() => onDelete(profile)}
             />
           </DialogItem>
         </DropdownMenuContent>

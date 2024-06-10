@@ -15,21 +15,23 @@ export const MenuComponent = () => {
   };
 
   useEffect(() => {
-    setSelected(window.location.pathname.split('/')[2] || '');
+    const path = decodeURIComponent(window.location.pathname.split('/')[1]);
+    setSelected(path);
   }, []);
 
   return (
-    <nav className="mb-10 flex items-center justify-between sm:mr-10 sm:flex-col sm:items-start sm:justify-start sm:gap-6 md:w-1/4">
-      <Link
-        href="/"
-        onClick={handleSelect}
-        className="text-xl font-bold sm:text-3xl"
-      >
-        LUCAS SHTORACHE
-      </Link>
+    <nav className="flex items-center justify-between animate-in sm:mr-10 sm:flex-col sm:items-start sm:justify-start sm:gap-6 md:w-1/4">
       {!loadingTags && (
         <>
-          <div className="hidden sm:block">
+          <Link
+            href="/"
+            onClick={handleSelect}
+            className="text-xl font-bold hover:text-gray-400 sm:text-3xl"
+          >
+            LUCAS SHTORACHE
+          </Link>
+
+          <div className="hidden animate-in sm:block">
             <MenuList
               handleSelect={handleSelect}
               selected={selected}

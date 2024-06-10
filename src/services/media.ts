@@ -23,7 +23,6 @@ export const getMedia = async (
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        authorization: `Bearer ${localStorage.getItem('access_token')}`,
       },
     });
 
@@ -60,9 +59,7 @@ export const createMedia = async (
     formData.append('isPublished', media.isPublished ? 'true' : 'false');
     formData.append('tagId', media.tagId);
     formData.append('type', media.type);
-
     if (file && media.type === 'PHOTO') {
-      console.log('file', file);
       formData.append('file', file);
     }
     if (media.type === 'VIDEO' && media.srcVideo) {
@@ -71,9 +68,6 @@ export const createMedia = async (
 
     const response = await fetch(`/api/medias`, {
       method: 'POST',
-      headers: {
-        authorization: `Bearer ${localStorage.getItem('access_token')}`,
-      },
       body: formData,
     });
 

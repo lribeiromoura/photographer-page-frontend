@@ -1,4 +1,3 @@
-//eslint-disable
 'use client';
 import Link from 'next/link';
 
@@ -18,6 +17,7 @@ export function MenuAdmin() {
   const menu = [
     { name: 'MEDIA', path: '/admin/media', enum: 'media' },
     { name: 'TAG', path: '/admin/tag', enum: 'tag' },
+    { name: 'PERFIL', path: '/admin/profile', enum: 'profile' },
     // { name: 'MEDIA TYPE', path: '/admin/mediatype', enum: 'mediatype' },
   ];
 
@@ -48,33 +48,6 @@ export function MenuAdmin() {
               </Link>
             );
           })}
-          {/* <Link href="/admin/media" legacyBehavior passHref>
-            <NavigationMenuLink
-              className={cn(navigationMenuTriggerStyle())}
-              active={selected === "MEDIA"}
-              onClick={handleSelect}
-            >
-              MEDIA
-            </NavigationMenuLink>
-          </Link>
-          <Link href="/admin/tag" legacyBehavior passHref>
-            <NavigationMenuLink
-              className={cn(navigationMenuTriggerStyle())}
-              active={selected === "TAG"}
-              onClick={handleSelect}
-            >
-              TAG
-            </NavigationMenuLink>
-          </Link>
-          <Link href="/admin/mediatype" legacyBehavior passHref>
-            <NavigationMenuLink
-              className={cn(navigationMenuTriggerStyle())}
-              active={selected === "MEDIA TYPE"}
-              onClick={handleSelect}
-            >
-              MEDIA TYPE
-            </NavigationMenuLink>
-          </Link> */}
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>

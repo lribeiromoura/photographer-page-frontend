@@ -7,6 +7,7 @@ type HeaderProps = {
   isButtonModal?: boolean;
   openModal?: boolean;
   modalContent?: React.ReactNode;
+  isButtonDisabled?: boolean;
   setOpenModal?: (open: boolean) => void;
   buttonCallback: () => void;
 };
@@ -18,6 +19,7 @@ export const Header = ({
   isButtonModal,
   openModal,
   modalContent,
+  isButtonDisabled,
   setOpenModal,
   buttonCallback,
 }: HeaderProps) => {
@@ -34,8 +36,9 @@ export const Header = ({
       {haveButton && !isButtonModal && (
         <div className="flex">
           <button
-            className="rounded bg-purple-500 px-4 py-2 font-bold text-white hover:bg-purple-700"
+            className="rounded bg-purple-500 px-4 py-2 font-bold text-white hover:bg-purple-700 disabled:opacity-50"
             onClick={() => buttonCallback()}
+            disabled={isButtonDisabled}
           >
             {buttonTitle}
           </button>

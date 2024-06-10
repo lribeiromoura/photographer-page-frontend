@@ -10,19 +10,25 @@ import { MoreHorizontal, CircleX, SquarePen } from 'lucide-react';
 
 import { DialogItem } from '@/app/(admin)/admin/(logged)/components/DialogItem';
 import { DeleteDialog } from '@/app/(admin)/admin/(logged)/components/DeleteDialog';
-import { Media } from '@/@types/media';
+import { Profile } from '@/@types/profile';
+import { MediaType } from '@/@types/mediatype';
 
-interface mediaTypeActionsProps {
-  media: Media;
-  onEdit: () => void;
-  onDelete: (mediaType: Media) => void;
+interface ProfileActionsProps {
+  profile: Profile;
+  mediaTypes: MediaType[];
+  onEdit: (profile: Profile) => void;
+  onDelete: (profile: Profile) => void;
 }
 
-export const MediaTypeActions = ({
-  media,
+export const ProfileActions = ({
+  profile,
+  mediaTypes,
   onEdit,
   onDelete,
-}: mediaTypeActionsProps) => {
+}: ProfileActionsProps) => {
+  const handleEditProfile = (profile: Profile) => {
+    onEdit(profile);
+  };
   return (
     <div className="pr-4 text-right">
       <DropdownMenu.Root>
@@ -34,17 +40,20 @@ export const MediaTypeActions = ({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DialogItem
+          {/* <DialogItem
             triggerChildren={
               <div className="my-2 flex items-center">
                 <SquarePen />
                 <p className="pl-2">Edit</p>
               </div>
             }
-            onOpenChange={() => onEdit()}
           >
-            Edit
-          </DialogItem>
+            <AddEditProfile
+              onConfirm={(profileEdited) => handleEditProfile(profileEdited)}
+              profile={profile}
+              mediaTypes={mediaTypes}
+            />
+          </DialogItem> */}
           <DialogItem
             triggerChildren={
               <div className="my-2 flex items-center">
@@ -54,10 +63,10 @@ export const MediaTypeActions = ({
             }
           >
             <DeleteDialog
-              title="Delete mediaType"
-              message="Are you sure you want to delete this media type?"
+              title="Delete Profile"
+              message="Are you sure you want to delete this profile?"
               buttonTitle="Delete"
-              onConfirm={() => onDelete(media)}
+              onConfirm={() => onDelete(profile)}
             />
           </DialogItem>
         </DropdownMenuContent>

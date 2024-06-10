@@ -24,10 +24,9 @@ export default function Admin() {
         email: user.email,
         password: user.password,
       });
-      console.log(response);
       router.push('admin/media');
     } catch (error: any) {
-      console.log('Login failed', error.message);
+      throw new Error(error);
     } finally {
       setLoading(false);
     }

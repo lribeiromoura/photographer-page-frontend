@@ -74,3 +74,47 @@
     @apply bg-background text-foreground;
   }
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.player-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-right: 20px;
+}
+
+.video-title {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.player-wrapper {
+  position: relative;
+  padding-top: 56.25%; /* Proporção 16:9 */
+}
+
+.react-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}

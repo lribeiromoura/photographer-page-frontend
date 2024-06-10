@@ -14,26 +14,20 @@ export const MenuList = ({ tags, selected, handleSelect }: MenuListProps) => {
         tags.map((tag) => (
           <li key={tag._id}>
             <Link
-              href={`/photos/${tag.name}`}
+              href={`/${tag.name}`}
               onClick={handleSelect}
-              className={
-                selected === capitalizeFirstLetter(tag.name)
+              className={`${
+                selected === tag.name
                   ? 'font-bold text-black'
-                  : 'text-black'
-              }
+                  : 'font-thin text-black'
+              } hover:text-gray-400`}
             >
-              {capitalizeFirstLetter(tag.name)}
+              {tag.name}
             </Link>
           </li>
         ))}
       <li>
-        <div
-          className={
-            selected === 'Contact' ? 'font-bold text-black' : 'text-black'
-          }
-        >
-          Contact
-        </div>
+        <div className="font-light text-black">Contato</div>
       </li>
     </ul>
   );
