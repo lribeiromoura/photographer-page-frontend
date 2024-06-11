@@ -34,6 +34,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const quantityOfTags = await IMedia.countDocuments({ tagId });
+    if (quantityOfTags >= 10) {
+      return NextResponse.json(
+        { message: 'Você não pode adicionar mais de 10 itens da mesma tag.' },
+        { status: HttpStatusCode.BadRequest },
+      );
+    }
+
     let mediaData: any = {
       name,
       description,

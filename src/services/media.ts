@@ -71,6 +71,11 @@ export const createMedia = async (
       body: formData,
     });
 
+    if (!response.ok) {
+      const body = await response.json();
+      return body;
+    }
+
     return response;
   } catch (error) {
     console.error('Error creating photo', error);
