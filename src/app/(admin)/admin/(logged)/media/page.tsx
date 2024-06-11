@@ -1,5 +1,4 @@
 'use client';
-import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 
 import { Media } from '@/@types/media';
@@ -125,11 +124,11 @@ export default function MediaPage() {
       } else {
         response = await editMedia(selectedPhoto, file);
       }
-      if (response?.error || response?.ok === false) {
-        toast.error(`Error: ${response.message.join(', ')}`);
+      if (response?.error || response?.ok === false || response?.message) {
+        return toast.warn(`Erro: ${response?.message}`);
       } else {
         toast.success(
-          `Media ${type === 'add' ? 'added' : 'edited'} successfully`,
+          `Media ${type === 'add' ? 'Adicionada' : 'Editada'} com sucesso`,
         );
         fetchPhotos();
         setOpenAddEditModal(false);
@@ -161,6 +160,7 @@ export default function MediaPage() {
           tags,
           type,
         );
+
         if (response) {
           const parsedPhotos = response.data.map((photo) => {
             return {

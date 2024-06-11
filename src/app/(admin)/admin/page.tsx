@@ -7,6 +7,7 @@ import { useLogin } from '@/hooks/useLogin';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
+import { toast } from 'react-toastify';
 
 export default function Admin() {
   const router = useRouter();
@@ -24,6 +25,10 @@ export default function Admin() {
         email: user.email,
         password: user.password,
       });
+      if (response?.error) {
+        toast.error('Credenciais inválidas');
+        return;
+      }
       router.push('admin/media');
     } catch (error: any) {
       throw new Error(error);
