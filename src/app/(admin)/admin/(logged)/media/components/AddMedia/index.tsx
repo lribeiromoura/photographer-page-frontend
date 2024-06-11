@@ -292,21 +292,6 @@ export const AddMedia = ({
                 {editMode ? 'Editar' : 'Adicionar'}
               </button>
             </div>
-            {/* <div className="relative mt-4 flex flex-col text-center md:flex md:justify-end md:text-right">
-              <button
-                onClick={onAddMedia}
-                disabled={handleDisable()}
-                className="mr-5 block w-full rounded-lg bg-purple-200 px-4 py-3 text-sm font-semibold text-purple-700 disabled:opacity-50 md:order-2 md:ml-2 md:inline-block md:w-auto md:py-2"
-              >
-                Adicionar
-              </button>
-              <button
-                onClick={onCancel}
-                className="mt-4 block w-full rounded-lg bg-gray-200 px-4 py-3 text-sm font-semibold md:order-1 md:mt-0 md:inline-block md:w-auto md:py-2"
-              >
-                Cancelar
-              </button>
-            </div> */}
           </div>
         </div>
       </main>
