@@ -1,5 +1,4 @@
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { Tooltip } from '@/components/ui/tooltip';
 
 type HeaderProps = {
   title: string;
@@ -31,7 +30,6 @@ export const Header = ({
       setOpenModal(true);
     }
   };
-  console.log(isButtonDisabled);
   return (
     <div className="flex justify-between">
       <h2 className="text-wh text-2xl font-semibold leading-tight text-white">
