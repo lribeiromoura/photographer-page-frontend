@@ -3,6 +3,7 @@ import { useMediaTags } from '@/hooks/useTags';
 import { XIcon } from 'lucide-react';
 import Image from 'next/image';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 type AddMediaProps = {
   isOpen: boolean;
@@ -37,6 +38,18 @@ export const AddMedia = ({
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const selectedFile = e.target.files[0];
+      if (
+        selectedFile.type !== 'image/jpeg' &&
+        selectedFile.type !== 'image/png'
+      ) {
+        toast.error('Arquivo inválido');
+        return;
+      }
+      if (selectedFile.size > 3000000) {
+        toast.error('Arquivo maior que 3MB');
+        return;
+      }
+
       setFile(selectedFile);
 
       const reader = new FileReader();
@@ -183,9 +196,10 @@ export const AddMedia = ({
                     ) : (
                       <input
                         id="file"
+                        className="peer h-10 w-full rounded-md bg-gray-50 px-4 outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-purple-400"
                         type="file"
                         onChange={handleFileChange}
-                        className="peer h-10 w-full rounded-md bg-gray-50 px-4 outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-purple-400"
+                        accept="image/jpeg, image/png"
                       />
                     )}
                   </div>
