@@ -95,6 +95,11 @@ export const AddMedia = ({
     }
   }, [selectedPhoto]);
 
+  useEffect(() => {
+    setPreview(null);
+    setFile(null);
+  }, [isOpen]);
+
   return (
     isOpen && (
       <main className="bg-transparent-900 absolute left-0 top-0 h-full w-full self-center overflow-x-hidden font-sans text-gray-900 antialiased">
