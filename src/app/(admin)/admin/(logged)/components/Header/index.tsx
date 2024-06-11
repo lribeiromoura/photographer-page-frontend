@@ -1,4 +1,5 @@
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Tooltip } from '@/components/ui/tooltip';
 
 type HeaderProps = {
   title: string;
@@ -8,6 +9,7 @@ type HeaderProps = {
   openModal?: boolean;
   modalContent?: React.ReactNode;
   isButtonDisabled?: boolean;
+  tootipContent?: string | null;
   setOpenModal?: (open: boolean) => void;
   buttonCallback: () => void;
 };
@@ -20,6 +22,7 @@ export const Header = ({
   openModal,
   modalContent,
   isButtonDisabled,
+  tootipContent,
   setOpenModal,
   buttonCallback,
 }: HeaderProps) => {
@@ -28,6 +31,7 @@ export const Header = ({
       setOpenModal(true);
     }
   };
+  console.log(isButtonDisabled);
   return (
     <div className="flex justify-between">
       <h2 className="text-wh text-2xl font-semibold leading-tight text-white">
@@ -45,16 +49,25 @@ export const Header = ({
         </div>
       )}
       {haveButton && isButtonModal && (
-        <Dialog open={openModal} onOpenChange={setOpenModal}>
-          <DialogTrigger
-            onClick={handleOpenModal}
-            data-state={!openModal}
-            className="rounded bg-purple-500 px-4 py-2 font-bold text-white hover:bg-purple-700"
-          >
-            {buttonTitle}
-          </DialogTrigger>
-          <DialogContent>{modalContent}</DialogContent>
-        </Dialog>
+        <div className="group relative flex">
+          <Dialog open={openModal} onOpenChange={setOpenModal}>
+            <DialogTrigger
+              onClick={handleOpenModal}
+              data-state={!openModal}
+              disabled={isButtonDisabled}
+              className="rounded bg-purple-500 px-4 py-2 font-bold text-white hover:bg-purple-700 disabled:opacity-50"
+            >
+              {buttonTitle}
+            </DialogTrigger>
+            {tootipContent && (
+              <span className="absolute bottom-12 w-full scale-0 rounded bg-gray-800 p-2 text-center text-xs text-white transition-all group-hover:scale-100">
+                {tootipContent}
+              </span>
+            )}
+
+            <DialogContent>{modalContent}</DialogContent>
+          </Dialog>
+        </div>
       )}
     </div>
   );

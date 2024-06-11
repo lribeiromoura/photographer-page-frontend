@@ -68,11 +68,15 @@ export default function TagPage() {
         <Header
           title="Tag"
           haveButton={true}
-          buttonTitle="Add Tag"
+          buttonTitle="Adicionar Tag"
           buttonCallback={() => setOpenCreateModal(true)}
           isButtonModal={true}
           openModal={openCreateModal}
           setOpenModal={setOpenCreateModal}
+          isButtonDisabled={tags.length >= 10}
+          tootipContent={
+            tags.length >= 10 ? 'Você atingiu o limite de tags' : null
+          }
           modalContent={
             <AddEditTag
               onConfirm={(createdTag) => handleAddTag(createdTag)}
